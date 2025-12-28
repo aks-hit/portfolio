@@ -192,7 +192,7 @@ Feel free to fork, modify, and use for your own portfolio. If you make improveme
 
 - **Email**: akshitsinghak@yahoo.com
 - **LinkedIn**: [akshit-singh-007](https://linkedin.com/in/akshit-singh-007)
-- **Phone**: +91-8787232180
+
 
 ---
 
