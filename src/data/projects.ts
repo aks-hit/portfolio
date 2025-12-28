@@ -16,7 +16,7 @@ export const projects: Project[] = [
     description: "Built a real-time Agentic AI Voice Agent using Twilio, Deepgram, OpenAI, and SQLite for complaint booking, tracking, escalation, and sentiment-aware responses.",
     highlights: "Deployed bilingual (English + Hindi) telephony support with persistent storage, reducing manual workload by 70% and achieving <2s latency.",
     tech: ["Twilio", "Deepgram", "OpenAI", "SQLite", "Python", "FastAPI"],
-    link: "#",
+    link: "https://github.com/aks-hit/Customer_Support_Voice_agent",
     gradient: "from-cyan-500 to-blue-600"
   },
   {
@@ -34,7 +34,7 @@ export const projects: Project[] = [
     description: "Engineered a Random Forest classifier (95% accuracy) and automated CI/CD with GitHub Actions + CML for monitoring and evaluation.",
     highlights: "Deployed model to Hugging Face Hub with real-time accessibility for 1000+ users, ensuring reproducibility and governance.",
     tech: ["Random Forest", "GitHub Actions", "CML", "Hugging Face", "MLOps"],
-    link: "#",
+    link: "https://github.com/aks-hit/CICD-for-ML",
     gradient: "from-green-500 to-teal-600"
   },
   {
@@ -52,7 +52,7 @@ export const projects: Project[] = [
     description: "Developed a 92% accurate SVM-based diabetes predictor with a Streamlit interface receiving 500+ user interactions in the first month.",
     highlights: "Deployed with interactive visualizations and real-time predictions for healthcare professionals.",
     tech: ["SVM", "Streamlit", "Scikit-learn", "Pandas", "Python"],
-    link: "#",
+    link: "https://diabetespredicting.streamlit.app/",
     gradient: "from-indigo-500 to-purple-600"
   }
 ];

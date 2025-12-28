@@ -17,7 +17,8 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     setMounted(true);
-    const savedTheme = localStorage.getItem('theme') as Theme;
+
+    const savedTheme = localStorage.getItem('theme') as Theme | null;
     if (savedTheme) {
       setTheme(savedTheme);
       document.body.classList.toggle('light', savedTheme === 'light');
@@ -31,8 +32,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.body.classList.toggle('light', newTheme === 'light');
   };
 
+  // 🚨 CRITICAL: Do not render children before provider exists
   if (!mounted) {
-    return <>{children}</>;
+    return null;
   }
 
   return (

@@ -1,14 +1,27 @@
-// ============================================
-// FILE: src/app/page.tsx
-// ============================================
 'use client';
 
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronDown, Mail, Phone, Linkedin, Github, Award, Code, Sparkles } from 'lucide-react';
+import {
+  ChevronDown,
+  Mail,
+  Phone,
+  Linkedin,
+  Github,
+  Award,
+  Code,
+  Sparkles,
+} from 'lucide-react';
 import Link from 'next/link';
 import MagneticButton from '@/components/MagneticButton';
 import FloatingCard from '@/components/FloatingCard';
+
+const colorMap: Record<string, string> = {
+  cyan: 'text-cyan-400',
+  blue: 'text-blue-400',
+  purple: 'text-purple-400',
+  pink: 'text-pink-400',
+};
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -26,62 +39,59 @@ export default function Home() {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
+      transition: { staggerChildren: 0.18, delayChildren: 0.25 },
     },
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 18, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-      },
+      transition: { type: 'spring', stiffness: 110 },
     },
   };
 
   return (
-          <div className="relative overflow-hidden">
+    <div className="relative overflow-hidden">
       {/* Animated background */}
-      <div className="fixed inset-0 -z-10">
+      <div className="fixed inset-0 -z-10 pointer-events-none">
         <div className="absolute inset-0 bg-dark-gradient" />
-        <div 
+        <div
           className="absolute inset-0 opacity-30"
           style={{
-            backgroundImage: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(6, 182, 212, 0.15), transparent 50%)`,
+            backgroundImage: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(6,182,212,0.15), transparent 50%)`,
           }}
         />
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10" />
       </div>
 
-      {/* Hero Section */}
-      <section className="min-h-screen flex items-center justify-center relative px-4">
+      {/* HERO SECTION */}
+      <section className="min-h-screen relative px-4 pt-28 pb-16 flex flex-col">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="max-w-5xl mx-auto text-center z-10"
+          className="max-w-5xl mx-auto text-center relative z-10 flex flex-col gap-10"
         >
-          <motion.div variants={itemVariants} className="mb-8">
+          {/* Badge */}
+          <motion.div variants={itemVariants}>
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-cyan-500/10 border border-cyan-500/30 rounded-full text-cyan-400 text-sm font-semibold backdrop-blur-sm">
               <Sparkles className="w-4 h-4" />
               Oracle Certified Data Science & GenAI Professional
             </span>
           </motion.div>
 
-          <motion.h1 
+          {/* Name */}
+          <motion.h1
             variants={itemVariants}
-            className="text-6xl md:text-8xl font-bold mb-6 gradient-text"
+            className="text-6xl md:text-8xl font-bold gradient-text leading-[1.15] pb-2"
           >
             Akshit Singh
           </motion.h1>
 
-          <motion.div variants={itemVariants} className="space-y-4 mb-8">
+          {/* Subtitle */}
+          <motion.div variants={itemVariants} className="space-y-4">
             <h2 className="text-2xl md:text-4xl text-slate-300 font-semibold">
               AI Developer & Machine Learning Engineer
             </h2>
@@ -90,16 +100,19 @@ export default function Home() {
             </p>
             <div className="flex items-center justify-center gap-2 text-cyan-400">
               <Award className="w-5 h-5" />
-              <span className="font-semibold">GATE 2025 Qualified • AIR 5246 • Top 9%</span>
+              <span className="font-semibold">
+                GATE 2025 Qualified • AIR 5246 • Top 9%
+              </span>
             </div>
           </motion.div>
 
-          <motion.div 
+          {/* CTA Buttons */}
+          <motion.div
             variants={itemVariants}
-            className="flex flex-wrap justify-center gap-4 mb-12"
+            className="flex flex-wrap justify-center gap-4"
           >
             <MagneticButton>
-              <a 
+              <a
                 href="mailto:akshitsinghak@yahoo.com"
                 className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
               >
@@ -109,7 +122,7 @@ export default function Home() {
             </MagneticButton>
 
             <MagneticButton>
-              <Link 
+              <Link
                 href="/projects"
                 className="flex items-center gap-2 px-6 py-3 glass-effect rounded-lg font-semibold hover:border-cyan-500/50 transition-all"
               >
@@ -119,9 +132,10 @@ export default function Home() {
             </MagneticButton>
           </motion.div>
 
-          <motion.div 
+          {/* Contact Icons */}
+          <motion.div
             variants={itemVariants}
-            className="flex justify-center gap-6 mb-12"
+            className="flex items-center justify-center gap-6 mt-2"
           >
             {[
               { icon: Mail, href: 'mailto:akshitsinghak@yahoo.com' },
@@ -130,44 +144,44 @@ export default function Home() {
               { icon: Github, href: '#' },
             ].map((item, index) => (
               <MagneticButton key={index}>
-                <a
-                  href={item.href}
-                  className="p-3 glass-effect rounded-full hover:bg-cyan-500/20 hover:border-cyan-500/50 transition-all group"
-                  target={item.href.startsWith('http') ? '_blank' : undefined}
-                  rel={item.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                >
-                  <item.icon className="w-6 h-6 group-hover:text-cyan-400 transition-colors" />
-                </a>
+                <div className="glass-effect rounded-full w-12 h-12 flex items-center justify-center hover:bg-cyan-500/20 transition-all">
+                  <a
+                    href={item.href}
+                    className="flex items-center justify-center w-full h-full"
+                    target={item.href.startsWith('http') ? '_blank' : undefined}
+                    rel={
+                      item.href.startsWith('http')
+                        ? 'noopener noreferrer'
+                        : undefined
+                    }
+                  >
+                    <item.icon className="w-6 h-6 hover:text-cyan-400 transition-colors" />
+                  </a>
+                </div>
               </MagneticButton>
             ))}
           </motion.div>
 
-          <motion.div 
-            variants={itemVariants}
-            className="animate-bounce"
-          >
-            <ChevronDown className="w-8 h-8 mx-auto text-cyan-400" />
+          {/* Scroll Indicator */}
+          <motion.div variants={itemVariants} className="pt-4">
+            <ChevronDown className="w-8 h-8 mx-auto text-cyan-400 animate-bounce" />
           </motion.div>
         </motion.div>
 
-        {/* Floating elements */}
-        <FloatingCard 
-          delay={0}
-          className="absolute top-20 left-10 hidden lg:block"
+        {/* INTERACTIVE ACHIEVEMENT FLOATING CARD */}
+        <FloatingCard
+        delay={1}
+        className="absolute bottom-32 right-10 hidden lg:block z-20"
         >
-          <div className="p-4 glass-effect rounded-lg">
-            <Code className="w-8 h-8 text-cyan-400" />
-          </div>
+        <Link
+            href="/about#achievements"
+            className="p-4 glass-effect rounded-lg flex items-center justify-center hover:bg-purple-500/20 transition-all cursor-pointer"
+            aria-label="View Achievements"
+        >
+            <Award className="w-8 h-8 text-purple-400" />
+        </Link>
         </FloatingCard>
 
-        <FloatingCard 
-          delay={1}
-          className="absolute bottom-40 right-10 hidden lg:block"
-        >
-          <div className="p-4 glass-effect rounded-lg">
-            <Award className="w-8 h-8 text-purple-400" />
-          </div>
-        </FloatingCard>
       </section>
 
       {/* Quick Stats */}
@@ -175,9 +189,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
-              { label: 'Projects', value: '5+', color: 'cyan' },
+              { label: 'Projects', value: '10+', color: 'cyan' },
               { label: 'CGPA', value: '8.68', color: 'blue' },
-              { label: 'Certifications', value: '5+', color: 'purple' },
+              { label: 'Certifications', value: '10+', color: 'purple' },
               { label: 'GATE Rank', value: '5246', color: 'pink' },
             ].map((stat, index) => (
               <motion.div
@@ -188,7 +202,9 @@ export default function Home() {
                 viewport={{ once: true }}
                 className="glass-effect p-6 rounded-xl text-center card-hover"
               >
-                <div className={`text-4xl font-bold text-${stat.color}-400 mb-2`}>
+                <div
+                  className={`text-4xl font-bold ${colorMap[stat.color]} mb-2`}
+                >
                   {stat.value}
                 </div>
                 <div className="text-slate-400">{stat.label}</div>

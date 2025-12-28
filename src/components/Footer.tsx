@@ -1,11 +1,11 @@
-import { Mail, Phone, Linkedin, Github, Heart } from 'lucide-react';
+import { Mail, Instagram, Linkedin, Github, Heart } from 'lucide-react';
 
 export default function Footer() {
   const socialLinks = [
     { icon: Mail, href: 'mailto:akshitsinghak@yahoo.com', label: 'Email' },
-    { icon: Phone, href: 'tel:+918787232180', label: 'Phone' },
+    { icon: Instagram, href: 'https://www.instagram.com/akshit.singh.7/', label: 'Instagram' },
     { icon: Linkedin, href: 'https://linkedin.com/in/akshit-singh-007', label: 'LinkedIn' },
-    { icon: Github, href: '#', label: 'GitHub' },
+    { icon: Github, href: 'https://github.com/aks-hit', label: 'GitHub' },
   ];
 
   return (

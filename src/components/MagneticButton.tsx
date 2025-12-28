@@ -11,11 +11,13 @@ export default function MagneticButton({ children }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleMouse = (e: React.MouseEvent) => {
-    const { clientX, clientY } = e;
-    const { width, height, left, top } = ref.current!.getBoundingClientRect();
-    const x = clientX - (left + width / 2);
-    const y = clientY - (top + height / 2);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!ref.current) return;
+
+    const rect = ref.current.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+
     setPosition({ x, y });
   };
 
@@ -24,15 +26,19 @@ export default function MagneticButton({ children }: MagneticButtonProps) {
   };
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      onMouseMove={handleMouse}
+      onMouseMove={handleMouseMove}
       onMouseLeave={reset}
-      animate={{ x: position.x * 0.3, y: position.y * 0.3 }}
-      transition={{ type: 'spring', stiffness: 150, damping: 15 }}
-      className="inline-block"
+      className="inline-flex items-center justify-center"
     >
-      {children}
-    </motion.div>
+      <motion.div
+        animate={{ x: position.x * 0.25, y: position.y * 0.25 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+        className="will-change-transform"
+      >
+        {children}
+      </motion.div>
+    </div>
   );
 }

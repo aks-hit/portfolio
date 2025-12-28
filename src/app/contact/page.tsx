@@ -1,10 +1,11 @@
+
 // ============================================
 // FILE: src/app/contact/page.tsx
 // ============================================
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Phone, Linkedin, Github, MapPin, Send } from 'lucide-react';
+import { Mail, Linkedin, Github, Send } from 'lucide-react';
 import Section from '@/components/Section';
 import MagneticButton from '@/components/MagneticButton';
 
@@ -13,31 +14,17 @@ export default function Contact() {
     {
       icon: Mail,
       label: 'Email',
-      value: 'akshitsinghak@yahoo.com',
       href: 'mailto:akshitsinghak@yahoo.com',
       color: 'cyan'
     },
-    {
-      icon: Phone,
-      label: 'Phone',
-      value: '+91-8787232180',
-      href: 'tel:+918787232180',
-      color: 'blue'
-    },
+    
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      value: 'akshit-singh-007',
       href: 'https://linkedin.com/in/akshit-singh-007',
       color: 'purple'
     },
-    {
-      icon: MapPin,
-      label: 'Location',
-      value: 'Kolkata, India',
-      href: '#',
-      color: 'pink'
-    }
+    
   ];
 
   return (

@@ -1,6 +1,3 @@
-// ============================================
-// FILE: src/app/about/page.tsx
-// ============================================
 'use client';
 
 import { motion } from 'framer-motion';
@@ -34,7 +31,7 @@ export default function About() {
             className="space-y-6"
           >
             <p className="text-lg text-slate-300 leading-relaxed">
-              I'm a passionate AI Developer and Machine Learning Engineer with a strong foundation in computer science and a proven track record of building intelligent systems. Currently pursuing B.Tech in Computer Science Engineering at Heritage Institute of Technology, Kolkata with a CGPA of 8.68/10.
+              I'm a passionate AI Developer and Machine Learning Engineer with a strong foundation in computer science and a proven track record of building intelligent systems. Completed my B.Tech in Computer Science Engineering at Heritage Institute of Technology, Kolkata with a CGPA of 8.68/10.
             </p>
             <p className="text-lg text-slate-300 leading-relaxed">
               My expertise lies in developing AI-powered solutions, from real-time voice agents to deep learning models for healthcare applications. I've successfully reduced manual workloads by up to 90% through innovative automation and optimized system performance by 70-80% through strategic improvements.
@@ -103,8 +100,10 @@ export default function About() {
         </div>
 
         {/* Achievements */}
-        <div>
-          <h2 className="text-4xl font-bold mb-8 text-center gradient-text">Achievements & Recognition</h2>
+            <div id="achievements" className="scroll-mt-28">
+            <h2 className="text-4xl font-bold mb-8 text-center gradient-text">
+                Achievements & Recognition
+            </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {achievements.map((achievement, index) => (
               <motion.div
@@ -129,6 +128,4 @@ export default function About() {
     </div>
   );
 }
-
-
 
