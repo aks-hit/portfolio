@@ -5,6 +5,8 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CursorFollower from '@/components/CursorFollower'
 import { ThemeProvider } from '@/contexts/ThemeContext'
+import ClientLayout from '@/components/ClientLayout';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
