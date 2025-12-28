@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { ThemeProvider } from '@/contexts/ThemeContext'
 import ClientLayout from '@/components/ClientLayout'
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <ClientLayout>{children}</ClientLayout>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
