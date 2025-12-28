@@ -14,6 +14,7 @@ export default function Contact() {
     {
       icon: Mail,
       label: 'Email',
+      value: 'akshitsinghak@yahoo.com',
       href: 'mailto:akshitsinghak@yahoo.com',
       color: 'cyan'
     },
@@ -21,6 +22,7 @@ export default function Contact() {
     {
       icon: Linkedin,
       label: 'LinkedIn',
+      value: 'akshit singh',
       href: 'https://linkedin.com/in/akshit-singh-007',
       color: 'purple'
     },
