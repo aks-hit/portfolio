@@ -1,0 +1,242 @@
+{
+  "name": "Akshit Singh",
+  "title": "AI Engineer | Agentic AI, RAG, LLMOps & Azure AI",
+  "badge": "GATE 2025 Top 9% | OCI Data Science & GenAI Certified",
+  "summary": "AI Engineer with production experience orchestrating agentic AI systems, RAG pipelines, LLM evaluation workflows, and Azure AI platforms. I build scalable AI products with FastAPI, Azure AI Foundry, PromptFlow, OpenAI, Gemini, MCP, vector retrieval, and real-time speech systems.",
+  "email": "akshitsinghak@yahoo.com",
+  "phone": "+918787232180",
+  "location": "India",
+  "links": {
+    "linkedin": "https://linkedin.com/in/akshit-singh-007",
+    "github": "https://github.com/aks-hit",
+    "instagram": "https://www.instagram.com/akshit.singh.7/"
+  },
+  "stats": [
+    { "label": "Latency Reduction", "value": "70-80%", "tone": "cyan" },
+    { "label": "Workflow Automation", "value": "90%", "tone": "emerald" },
+    { "label": "Enterprise Workflows", "value": "3+", "tone": "amber" },
+    { "label": "GATE DA Rank", "value": "5246", "tone": "rose" }
+  ],
+  "education": {
+    "degree": "B.Tech in Computer Science Engineering",
+    "school": "Heritage Institute of Technology, Kolkata",
+    "score": "CGPA: 8.68/10"
+  },
+  "achievements": [
+    "Ranked AIR 5246 among 57,054 candidates in GATE 2025 Data Science & AI, top 9% nationwide.",
+    "Qualified GATE 2025 Computer Science with AIR 20150 among 1,70,825 candidates, top 12% nationwide.",
+    "Secured a top-10 finish among 100+ teams at HackHeritage 2023 as team lead, delivering a working AI product under a 36-hour build window.",
+    "Captained the college basketball team to 3 consecutive inter-college championships.",
+    "Contributed as Public Relations Member at Rotaract Club, coordinating community outreach and large-scale events."
+  ],
+  "skills": {
+    "Agentic AI & LLM Engineering": [
+      "Agentic AI",
+      "AI Agents",
+      "Multi-Agent Systems",
+      "Tool-Using Agents",
+      "Autonomous Workflows",
+      "RAG",
+      "Graph RAG",
+      "Context Engineering",
+      "Prompt Engineering",
+      "Structured Outputs",
+      "Function Calling",
+      "Model Routing",
+      "Token Optimization",
+      "LLM Evaluation",
+      "LLM-as-a-Judge",
+      "Guardrails",
+      "Responsible AI",
+      "Model Context Protocol (MCP)",
+      "A2A Patterns"
+    ],
+    "Frameworks & Model APIs": [
+      "OpenAI",
+      "GPT-4o",
+      "GPT-4o-mini",
+      "Google Gemini",
+      "Gemini 2.5 Flash",
+      "LangChain",
+      "LangGraph",
+      "LlamaIndex",
+      "Semantic Kernel",
+      "AutoGen",
+      "CrewAI",
+      "Hugging Face",
+      "Ollama",
+      "Transformers"
+    ],
+    "Azure & Cloud AI": [
+      "Azure AI Foundry",
+      "PromptFlow",
+      "Azure OpenAI Service",
+      "Azure ML Studio",
+      "Azure AI Search",
+      "Azure Document Intelligence",
+      "Azure Speech Services",
+      "Azure Blob Storage",
+      "ADLS Gen2",
+      "Azure Functions",
+      "Azure Container Apps",
+      "AKS",
+      "AWS",
+      "Oracle Cloud",
+      "Vertex AI"
+    ],
+    "Backend, Data & Vector Search": [
+      "Python",
+      "SQL",
+      "C/C++",
+      "TypeScript",
+      "FastAPI",
+      "REST APIs",
+      "WebSockets",
+      "Microservices",
+      "PostgreSQL",
+      "SQLite",
+      "Redis",
+      "Cosmos DB",
+      "Pinecone",
+      "FAISS",
+      "Weaviate",
+      "ChromaDB",
+      "Embeddings",
+      "Reranking",
+      "Chunking"
+    ],
+    "ML, Speech & Computer Vision": [
+      "PyTorch",
+      "TensorFlow",
+      "Scikit-learn",
+      "CNNs",
+      "TCNs",
+      "NumPy",
+      "Pandas",
+      "Matplotlib",
+      "OpenCV",
+      "MediaPipe",
+      "Deepgram ASR",
+      "Twilio",
+      "Pipecat",
+      "Speech-to-Text",
+      "Text-to-Speech",
+      "Multimodal Evaluation"
+    ],
+    "MLOps, DevOps & Quality": [
+      "Docker",
+      "Kubernetes",
+      "GitHub Actions",
+      "CI/CD",
+      "MLOps",
+      "LLMOps",
+      "Azure DevOps",
+      "CML",
+      "Git",
+      "Linux",
+      "Model Monitoring",
+      "Observability",
+      "API Compliance",
+      "Schema Validation",
+      "PII-Aware AI Systems",
+      "Security & Governance",
+      "Streamlit",
+      "Gradio"
+    ],
+    "Certifications": [
+      "OCI Data Science Professional",
+      "OCI Generative AI Professional",
+      "Machine Learning Specialization",
+      "Google CyberSecurity Professional"
+    ]
+  },
+  "experiences": [
+    {
+      "id": "relay-human-cloud-junior-software-developer",
+      "role": "Junior Software Developer",
+      "company": "Relay Human Cloud",
+      "period": "January 2026 - Present",
+      "points": [
+        "Orchestrated production-grade agentic AI systems on Microsoft Azure using Azure AI Foundry, PromptFlow, and Azure ML Studio for scalable multi-step LLM orchestration across 3+ enterprise workflows.",
+        "Spearheaded a Deep Search AI Agent integrating Bing Search APIs, reducing average research retrieval time by approximately 60% through context-aware real-time synthesis.",
+        "Productionized a PromptFlow document ETL pipeline to classify, extract, and summarize multi-format documents using Azure Document Intelligence, cutting manual document processing effort by approximately 75%.",
+        "Launched an AI-powered multimodal assessment platform for writing, speaking, and interview evaluation with Azure STT/TTS and WebSocket-based real-time communication across 3 evaluation modalities.",
+        "Instrumented RAG pipelines with vector-based retrieval and MCP servers/clients, establishing modular AI agent architectures across 4+ integrated services."
+      ],
+      "color": "cyan"
+    },
+    {
+      "id": "yourallystack-ai-engineer-intern",
+      "role": "AI Engineer Intern",
+      "company": "YourAllyStack",
+      "period": "September 2025 - January 2026",
+      "points": [
+        "Architected a scalable AI interview orchestration platform using FastAPI, Google Gemini, and GPT-4o-mini, eliminating 90% of manual setup effort across domain-specific interview workflows.",
+        "Accelerated LLM inference latency by 70-80% through prompt compression, token-budget accounting, and intelligent multi-model routing across providers.",
+        "Formalized deterministic LLM pipelines with schema-constrained parsing and LLM-as-a-Judge validation, reducing hallucination rate by approximately 40% and ensuring strict API compliance.",
+        "Delivered an end-to-end speech-to-evaluation system fusing ASR transcription with rubric-based LLM scoring, cutting manual candidate evaluation time by approximately 65%.",
+        "Standardized modular interview APIs by decoupling generation, evaluation, and validation services, enabling independent scaling and zero-downtime deployments."
+      ],
+      "color": "violet"
+    },
+    {
+      "id": "iirm-deep-learning-research",
+      "role": "Deep Learning Research Intern",
+      "company": "Institute of Infrastructure Research And Management",
+      "period": "June 2024 - July 2024",
+      "points": [
+        "Researched ML/DL-based sleep stage classification using non-invasive PPG signals and achieved up to 86% accuracy.",
+        "Implemented residual convolutional blocks and temporal convolutional networks, improving predictive accuracy by 10-15% compared with traditional methods.",
+        "Orchestrated data cleaning and preprocessing workflows with Pandas and Scikit-learn, reducing model error by 15%."
+      ],
+      "color": "emerald"
+    }
+  ],
+  "projects": [
+    {
+      "id": "customer-support-voice-agent",
+      "title": "AI-Powered Customer Support Voice Agent",
+      "description": "Constructed a production-ready real-time agentic AI voice system using Twilio, Deepgram, OpenAI, SQLite, and FastAPI for complaint booking, tracking, escalation, and sentiment-aware responses.",
+      "highlights": "Deployed bilingual English and Hindi telephony with sub-2-second end-to-end latency, concurrent call handling, and persistent session storage, cutting manual workload by 70%.",
+      "tech": ["Twilio", "Deepgram", "OpenAI", "SQLite", "Python", "FastAPI", "Voice AI", "Agentic AI"],
+      "link": "https://github.com/aks-hit/Customer_Support_Voice_agent",
+      "gradient": "from-cyan-500 to-blue-600"
+    },
+    {
+      "id": "sign-language-recognition",
+      "title": "Real-Time Sign Language Recognition System",
+      "description": "Trained a CNN-based ASL recognition model using MediaPipe and OpenCV for 30+ gestures.",
+      "highlights": "Achieved 95% accuracy, integrated text-to-speech with a Tkinter GUI, and delivered sub-1.5-second latency for 100+ test users.",
+      "tech": ["MediaPipe", "OpenCV", "TensorFlow", "CNN", "Python", "Tkinter", "TTS"],
+      "link": "#",
+      "gradient": "from-fuchsia-500 to-rose-600"
+    },
+    {
+      "id": "cicd-drug-classification",
+      "title": "CI/CD Pipeline for Drug Classification Model",
+      "description": "Engineered a Random Forest classifier and automated model evaluation with GitHub Actions and CML.",
+      "highlights": "Deployed the model to Hugging Face Hub with reproducible evaluation, governance checks, and real-time accessibility for 1000+ users.",
+      "tech": ["Random Forest", "GitHub Actions", "CML", "Hugging Face", "MLOps", "CI/CD"],
+      "link": "https://github.com/aks-hit/CICD-for-ML",
+      "gradient": "from-emerald-500 to-teal-600"
+    },
+    {
+      "id": "shulk-financial-platform",
+      "title": "Shulk: Financial Management Platform",
+      "description": "Spearheaded development of an AI-driven financial advisory platform delivering personalized strategies to 1000+ users.",
+      "highlights": "Combined AI/ML workflows with a modern product stack to provide intelligent financial insights and recommendations.",
+      "tech": ["AI/ML", "Python", "FastAPI", "React", "PostgreSQL"],
+      "link": "#",
+      "gradient": "from-amber-500 to-orange-600"
+    },
+    {
+      "id": "diabetes-prediction",
+      "title": "Machine Learning for Diabetes Prediction",
+      "description": "Developed a 92% accurate SVM-based diabetes predictor with a Streamlit interface.",
+      "highlights": "Added interactive visualizations and real-time predictions for healthcare professionals, receiving 500+ user interactions in the first month.",
+      "tech": ["SVM", "Streamlit", "Scikit-learn", "Pandas", "Python"],
+      "link": "https://diabetespredicting.streamlit.app/",
+      "gradient": "from-indigo-500 to-sky-600"
+    }
+  ]
+}

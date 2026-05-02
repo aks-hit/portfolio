@@ -1,0 +1,8 @@
+{
+  "profileUrl": "https://linkedin.com/in/akshit-singh-007",
+  "headline": "AI Engineer | Agentic AI, RAG, LLMOps, Azure AI Foundry & Voice AI",
+  "featuredSignals": [
+    "Latest LinkedIn/resume changes can be mirrored here and will be folded into the generated portfolio data during CI.",
+    "Use this file for new jobs, featured posts, credentials, or project highlights when a direct LinkedIn API integration is unavailable."
+  ]
+}

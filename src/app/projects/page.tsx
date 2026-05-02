@@ -10,20 +10,21 @@ export default function ProjectsPage() {
   const [activeProject, setActiveProject] = useState<number | null>(null);
 
   const handleHover = (index: number) => {
-    // Bring user focus to top / home position
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-
     setActiveProject(index);
   };
 
   return (
     <section className="py-28 px-4 relative">
-      <h1 className="text-5xl font-bold text-center gradient-text mb-16">
-        Featured Projects
-      </h1>
+      <div className="mx-auto mb-14 max-w-3xl text-center">
+        <p className="mb-3 text-sm font-bold uppercase tracking-[0.24em] text-emerald-300">
+          Mission archive
+        </p>
+        <h1 className="text-5xl font-black gradient-text">Featured Projects</h1>
+        <p className="mt-5 text-lg leading-8 text-slate-400">
+          Hover a mission card to open the field report. Each project is treated as
+          a playable quest: problem, stack, outcome, and link when available.
+        </p>
+      </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {projects.map((project, index) => (

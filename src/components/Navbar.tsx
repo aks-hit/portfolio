@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Bot, Menu, Moon, Sun, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -32,13 +32,18 @@ export default function Navbar() {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'glass-effect shadow-lg' : 'bg-transparent'
+        scrolled
+          ? 'border-b border-slate-800 bg-slate-950/95 shadow-lg backdrop-blur-xl'
+          : 'border-b border-slate-900/60 bg-slate-950/70 backdrop-blur-md'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <Link href="/" className="text-2xl font-bold gradient-text">
-            AS
+          <Link href="/" className="flex items-center gap-2 text-xl font-black text-white">
+            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-400 text-slate-950">
+              <Bot className="h-5 w-5" />
+            </span>
+            <span className="gradient-text">Akshit OS</span>
           </Link>
 
           {/* Desktop Menu */}
