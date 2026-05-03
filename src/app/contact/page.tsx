@@ -1,72 +1,66 @@
-
-// ============================================
-// FILE: src/app/contact/page.tsx
-// ============================================
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, Send } from 'lucide-react';
+import { Github, Linkedin, Mail, Send } from 'lucide-react';
 import Section from '@/components/Section';
 import MagneticButton from '@/components/MagneticButton';
+import { profile } from '@/data/profile';
 
 export default function Contact() {
   const contactMethods = [
     {
       icon: Mail,
       label: 'Email',
-      value: 'akshitsinghak@yahoo.com',
-      href: 'mailto:akshitsinghak@yahoo.com',
-      color: 'cyan'
+      value: profile.email,
+      href: `mailto:${profile.email}`,
+      accent: 'text-cyan-300',
     },
-    
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      value: 'akshit singh',
-      href: 'https://linkedin.com/in/akshit-singh-007',
-      color: 'purple'
+      value: 'akshit-singh-007',
+      href: profile.links.linkedin,
+      accent: 'text-blue-300',
     },
-    
+    {
+      icon: Github,
+      label: 'GitHub',
+      value: 'aks-hit',
+      href: profile.links.github,
+      accent: 'text-amber-300',
+    },
   ];
 
   return (
     <div className="pt-20">
-      <Section title="Get In Touch">
-        <div className="max-w-4xl mx-auto">
+      <Section title="Contact">
+        <div className="mx-auto max-w-4xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            className="mb-12 text-center"
           >
-            <p className="text-xl text-slate-300 mb-4">
-              I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
-            </p>
-            <p className="text-lg text-slate-400">
-              Feel free to reach out through any of the channels below!
+            <p className="text-xl text-slate-300">
+              Send a mission brief, collaboration idea, AI role, or project problem.
+              The fastest path is email.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
+          <div className="mb-12 grid gap-5 md:grid-cols-3">
             {contactMethods.map((method, index) => (
               <motion.a
-                key={index}
+                key={method.label}
                 href={method.href}
                 target={method.href.startsWith('http') ? '_blank' : undefined}
                 rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className="glass-effect p-6 rounded-xl card-hover group"
+                transition={{ delay: index * 0.08 }}
+                className="rounded-xl border border-slate-800 bg-slate-950/70 p-5 transition hover:-translate-y-1 hover:border-cyan-400/60"
               >
-                <div className="flex items-center gap-4">
-                  <div className={`p-3 bg-${method.color}-500/10 rounded-lg group-hover:bg-${method.color}-500/20 transition-colors`}>
-                    <method.icon className={`w-6 h-6 text-${method.color}-400`} />
-                  </div>
-                  <div>
-                    <p className="text-sm text-slate-400 mb-1">{method.label}</p>
-                    <p className="text-slate-200 font-medium">{method.value}</p>
-                  </div>
-                </div>
+                <method.icon className={`mb-5 h-7 w-7 ${method.accent}`} />
+                <p className="mb-1 text-sm text-slate-400">{method.label}</p>
+                <p className="break-words font-semibold text-slate-200">{method.value}</p>
               </motion.a>
             ))}
           </div>
@@ -74,16 +68,16 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
+            transition={{ delay: 0.32 }}
             className="text-center"
           >
             <MagneticButton>
               <a
-                href="mailto:akshitsinghak@yahoo.com"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-lg font-semibold text-lg hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
+                href={`mailto:${profile.email}`}
+                className="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-8 py-4 text-lg font-bold text-slate-950 shadow-lg shadow-cyan-950/30 transition hover:bg-cyan-300"
               >
-                <Send className="w-5 h-5" />
-                Send me an email
+                <Send className="h-5 w-5" />
+                Send mission brief
               </a>
             </MagneticButton>
           </motion.div>
