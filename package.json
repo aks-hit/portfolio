@@ -3,8 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "sync:profile": "node scripts/sync-profile.mjs",
-    "prebuild": "npm run sync:profile",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

@@ -4,11 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'content/**'
-      - 'scripts/sync-profile.mjs'
       - 'src/**'
-      - 'package*.json'
+      - 'package.json'
       - 'next.config.js'
+      - 'tailwind.config.ts'
+      - 'tsconfig.json'
       - '.github/workflows/portfolio-sync-deploy.yml'
   pull_request:
     branches: [main]
@@ -28,13 +28,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: npm
 
       - name: Install dependencies
-        run: npm ci
-
-      - name: Sync resume and LinkedIn content
-        run: npm run sync:profile
+        run: npm install
 
       - name: Build portfolio
         run: npm run build

@@ -45,3 +45,5 @@ package-lock.json
 agent.md
 generate_agent_md.py
 *.zip
+.vercel
+.env*
