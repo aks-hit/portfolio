@@ -1,70 +1,121 @@
-# Akshit Singh Portfolio
+# Akshit Singh — AI Engineer Portfolio
 
-An AI-engineer portfolio built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion, and a small content sync pipeline. The homepage is an interactive agent console where visitors can switch between Builder, Research, MLOps, and Recruiter agents.
+A modern, interactive portfolio built with **Next.js 14**, **TypeScript**, **Tailwind CSS**, and **Framer Motion**. The homepage features an **Agent Mission Hub** — a live console where visitors can chat with four AI-themed agents (Builder, RAG, MLOps, Recruiter) to explore skills, projects, and career highlights.
 
-## Quick Start
+> **Live site**: Deployed automatically via Vercel from `main`.
+
+---
+
+## ✨ Features
+
+- **Agent Mission Hub** — interactive chat console on the homepage with four role-specific agents that answer questions about skills, projects, impact, and hiring signal
+- **Data-driven content** — all profile data (skills, experience, projects, achievements, stats) lives in a single typed module (`src/data/profile.ts`)
+- **Five pages** — Home, About, Experience, Projects, Contact
+- **Framer Motion animations** — smooth page transitions, scroll-triggered reveals, and micro-interactions
+- **Magnetic buttons & custom cursor** — polished UI with hover-aware interactive elements
+- **Dark theme** — sleek dark-mode design with cyan/emerald/amber/rose accent palette
+- **Static export** — `next build` outputs a fully static site (`output: 'export'`), deployable anywhere
+- **Responsive** — mobile-first layout across all pages
+
+## 🛠 Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 14 (App Router, static export) |
+| Language | TypeScript |
+| Styling | Tailwind CSS 3 |
+| Animations | Framer Motion |
+| Icons | Lucide React |
+| Font | Inter (Google Fonts) |
+| CI/CD | GitHub Actions + Vercel |
+
+## 📂 Project Structure
+
+```
+├── .github/workflows/      # CI build validation
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   │   ├── page.tsx         # Home (Agent Mission Hub)
+│   │   ├── about/           # About, skills, achievements
+│   │   ├── experience/      # Work experience timeline
+│   │   ├── projects/        # Project cards with overlay details
+│   │   ├── contact/         # Contact methods
+│   │   ├── layout.tsx       # Root layout with theme provider
+│   │   └── globals.css      # Global styles & design tokens
+│   ├── components/          # Reusable UI components
+│   │   ├── AgentMissionHub  # Interactive agent chat console
+│   │   ├── Navbar           # Navigation bar
+│   │   ├── Footer           # Site footer
+│   │   ├── ProjectCard      # Project display card
+│   │   ├── ProjectOverlay   # Hover-triggered project detail
+│   │   ├── ExperienceCard   # Experience timeline card
+│   │   ├── MagneticButton   # Hover-aware magnetic button
+│   │   ├── CursorFollower   # Custom cursor component
+│   │   ├── FloatingCard     # Animated floating card
+│   │   ├── Section          # Reusable section wrapper
+│   │   └── ClientLayout     # Client-side layout wrapper
+│   ├── contexts/            # React context providers
+│   │   └── ThemeContext      # Theme management
+│   ├── data/                # Typed data modules
+│   │   ├── profile.ts       # All profile data (generated)
+│   │   ├── experience.ts    # Experience re-exports
+│   │   └── projects.ts      # Projects re-exports
+│   └── lib/
+│       └── utils.ts         # Utility functions (cn helper)
+├── tailwind.config.ts       # Tailwind configuration
+├── next.config.js           # Next.js config (static export)
+├── tsconfig.json            # TypeScript config
+└── package.json             # Dependencies & scripts
+```
+
+## 🚀 Quick Start
 
 ```bash
+# Install dependencies
 npm install
+
+# Start development server
 npm run dev
 ```
 
-Open `http://localhost:3000`.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Updating Resume, LinkedIn, Projects, or Jobs
-
-The portfolio content now comes from:
-
-- `content/resume.json`: name, summary, stats, skills, experience, projects, achievements, contact links.
-- `content/linkedin.json`: LinkedIn profile URL, headline, and featured signals from recent LinkedIn updates.
-
-After editing either file, run:
+## 📦 Build & Deploy
 
 ```bash
-npm run sync:profile
+# Production build (static export to /out)
 npm run build
-```
 
-`npm run sync:profile` regenerates `src/data/profile.ts`, and the site imports that generated profile everywhere.
-
-LinkedIn does not provide a simple public API for automatic profile scraping. The reliable workflow is to mirror LinkedIn changes into `content/linkedin.json`, or replace that file from a LinkedIn data export before CI runs. Vercel redeploys when changes are pushed to `main`.
-
-## CI/CD
-
-The workflow at `.github/workflows/portfolio-sync-deploy.yml` validates the portfolio before Vercel deploys from `main`:
-
-1. Installs dependencies with `npm ci`.
-2. Runs `npm run sync:profile`.
-3. Builds the static Next.js export.
-
-It runs on:
-
-- Pushes to `main` that affect content, source, config, or workflow files.
-- Pull requests targeting `main`.
-- Manual `workflow_dispatch`.
-
-There is no daily schedule and no GitHub Pages deployment step. That prevents the daily failure email from GitHub Pages while keeping a build check before Vercel deploys the connected `main` branch.
-
-## Interactive Agents
-
-The homepage agents run in local static mode with curated responses based on the resume content. This avoids exposing a Gemini/OpenAI key in browser JavaScript, which would be unsafe for a public static deployment.
-
-To make the agents fully LLM-backed later, add a serverless backend route or edge function that stores the Gemini/OpenAI key server-side, then call that endpoint from `src/components/AgentMissionHub.tsx`.
-
-## Useful Scripts
-
-```bash
-npm run dev
-npm run sync:profile
-npm run build
+# Preview the production build
 npm run start
 ```
 
-## Tech Stack
+The site is configured for static export (`output: 'export'` in `next.config.js`), making it compatible with Vercel, Netlify, GitHub Pages, or any static host.
 
-- Next.js 14 App Router
-- TypeScript
-- Tailwind CSS
-- Framer Motion
-- Lucide React
-- GitHub Actions and Vercel
+## 🔄 CI/CD
+
+The GitHub Actions workflow (`.github/workflows/portfolio-sync-deploy.yml`) runs on:
+
+- Pushes to `main` affecting source, config, or workflow files
+- Pull requests targeting `main`
+- Manual `workflow_dispatch`
+
+It validates the build before Vercel deploys the connected `main` branch.
+
+## 🤖 Interactive Agents
+
+The homepage agents run in **local static mode** with curated, keyword-matched responses derived from the profile data. No API keys are exposed in browser JavaScript.
+
+To upgrade to a fully LLM-backed experience later, add a serverless backend route that stores the API key server-side, then call that endpoint from `AgentMissionHub.tsx`.
+
+## 📝 Updating Content
+
+All portfolio content is driven by `src/data/profile.ts`. To update:
+
+1. Edit the profile data in `src/data/profile.ts`
+2. Run `npm run dev` to preview changes
+3. Push to `main` — Vercel auto-deploys
+
+## 📄 License
+
+ISC
