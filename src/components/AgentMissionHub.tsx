@@ -237,14 +237,14 @@ export default function Hero() {
               className="hidden lg:flex justify-center"
             >
               <div className="relative">
-                <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-amber-400/20 via-transparent to-zinc-600/20 blur-xl" />
-                <div className="relative overflow-hidden rounded-2xl border border-zinc-800/60 bg-zinc-900/30">
+                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/10 via-transparent to-zinc-600/10 blur-2xl" />
+                <div className="relative">
                   <Image
                     src="/images/profile.png"
                     alt="Akshit Singh"
                     width={420}
                     height={420}
-                    className="object-cover"
+                    className="object-contain"
                     priority
                   />
                 </div>
