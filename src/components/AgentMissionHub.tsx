@@ -107,37 +107,59 @@ function useTypewriter(words: string[], typingSpeed = 60, deletingSpeed = 35, pa
 
 const projectIcons = [Zap, Bot, Cpu, GitBranch, Code2, Sparkles];
 
+type ChatMessage = { role: 'user' | 'bot'; text: string };
+
 export default function Hero() {
   const [question, setQuestion] = useState('');
-  const [answer, setAnswer] = useState<string | null>(null);
+  const [messages, setMessages] = useState<ChatMessage[]>([
+    { role: 'bot', text: "Hey! 👋 I'm Akshit's AI assistant. Ask me about his skills, projects, experience, or why you should hire him!" }
+  ]);
   const [isAnswering, setIsAnswering] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const chatRef = useRef<HTMLDivElement>(null);
   const typedPlaceholder = useTypewriter(placeholders);
 
   const featuredProjects = profile.projects.slice(0, 3);
   const latestExperience = profile.experiences[0];
 
-  function handleAsk(promptText: string) {
+  // Auto-scroll chat to bottom
+  useEffect(() => {
+    if (chatRef.current) {
+      chatRef.current.scrollTop = chatRef.current.scrollHeight;
+    }
+  }, [messages, isAnswering]);
+
+  async function handleAsk(promptText: string) {
     const trimmed = promptText.trim();
-    if (!trimmed) return;
+    if (!trimmed || isAnswering) return;
 
+    // Add user message
+    setMessages(prev => [...prev, { role: 'user', text: trimmed }]);
     setIsAnswering(true);
-    setAnswer(null);
 
-    setTimeout(() => {
-      setAnswer(getAnswer(trimmed));
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question: trimmed }),
+      });
+      const data = await res.json();
+      setMessages(prev => [...prev, { role: 'bot', text: data.answer || data.error || 'Something went wrong.' }]);
+    } catch {
+      setMessages(prev => [...prev, { role: 'bot', text: getAnswer(trimmed) }]);
+    } finally {
       setIsAnswering(false);
-    }, 400);
+    }
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
     handleAsk(question);
+    setQuestion('');
   }
 
   function handleClear() {
     setQuestion('');
-    setAnswer(null);
     inputRef.current?.focus();
   }
 
@@ -146,7 +168,7 @@ export default function Hero() {
       {/* ── Hero Section ── */}
       <section className="px-4 pt-28 pb-16">
         <div className="mx-auto max-w-6xl">
-          <div className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             {/* Left — Content */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
@@ -234,9 +256,9 @@ export default function Hero() {
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="hidden lg:block"
+              className="hidden lg:flex"
             >
-              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
+              <div className="flex flex-col w-full rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
                 {/* Bot header */}
                 <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800/40">
                   <div className="relative">
@@ -258,64 +280,64 @@ export default function Hero() {
                   <Bot className="ml-auto h-5 w-5 text-amber-400/40" />
                 </div>
 
-                {/* Chat area */}
-                <div className="space-y-4 min-h-[200px] max-h-[320px] overflow-y-auto mb-4">
-                  {/* Default greeting or answer — speech bubble from Akshit */}
-                  <div className="flex items-start gap-3">
-                    <div className="shrink-0 h-7 w-7 rounded-full overflow-hidden border border-zinc-700">
-                      <Image
-                        src="/images/profile.png"
-                        alt="Akshit"
-                        width={28}
-                        height={28}
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="relative max-w-[85%]">
-                      {/* Speech bubble tail */}
-                      <div className="absolute -left-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-zinc-800/80" />
+                {/* Chat area — scrollable, grows to fill */}
+                <div ref={chatRef} className="flex-1 space-y-4 overflow-y-auto mb-4 pr-1" style={{ maxHeight: '400px' }}>
+                  {messages.map((msg, i) => (
+                    msg.role === 'bot' ? (
+                      /* Bot message — left aligned with avatar */
                       <motion.div
-                        key={answer || 'greeting'}
+                        key={i}
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-4 py-3"
+                        className="flex items-start gap-3"
                       >
-                        {isAnswering ? (
-                          <div className="flex items-center gap-2">
-                            <div className="flex gap-1">
-                              <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-                              <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-                              <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '300ms' }} />
-                            </div>
+                        <div className="shrink-0 h-7 w-7 rounded-full overflow-hidden border border-zinc-700">
+                          <Image src="/images/profile.png" alt="Akshit" width={28} height={28} className="object-cover" />
+                        </div>
+                        <div className="relative max-w-[85%]">
+                          <div className="absolute -left-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-zinc-800/80" />
+                          <div className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-4 py-3">
+                            <p className="text-sm leading-6 text-zinc-300">{msg.text}</p>
                           </div>
-                        ) : (
-                          <p className="text-sm leading-6 text-zinc-300">
-                            {answer || "Hey! 👋 I'm Akshit's AI assistant. Ask me about his skills, projects, experience, or why you should hire him!"}
-                          </p>
-                        )}
+                        </div>
                       </motion.div>
-                    </div>
-                  </div>
+                    ) : (
+                      /* User message — right aligned */
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, x: 10 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        className="flex justify-end"
+                      >
+                        <div className="relative max-w-[80%]">
+                          <div className="absolute -right-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[8px] border-l-amber-400/20" />
+                          <div className="rounded-2xl rounded-tr-sm bg-amber-400/10 border border-amber-400/20 px-4 py-3">
+                            <p className="text-sm text-zinc-200">{msg.text}</p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )
+                  ))}
 
-                  {/* User's question — speech bubble from user (right-aligned) */}
-                  {question && answer && (
-                    <motion.div
-                      initial={{ opacity: 0, x: 10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      className="flex justify-end"
-                    >
-                      <div className="relative max-w-[80%]">
-                        <div className="absolute -right-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[8px] border-l-amber-400/20" />
-                        <div className="rounded-2xl rounded-tr-sm bg-amber-400/10 border border-amber-400/20 px-4 py-3">
-                          <p className="text-sm text-zinc-200">{question}</p>
+                  {/* Typing indicator */}
+                  {isAnswering && (
+                    <div className="flex items-start gap-3">
+                      <div className="shrink-0 h-7 w-7 rounded-full overflow-hidden border border-zinc-700">
+                        <Image src="/images/profile.png" alt="Akshit" width={28} height={28} className="object-cover" />
+                      </div>
+                      <div className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-4 py-3">
+                        <div className="flex gap-1">
+                          <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                          <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                          <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '300ms' }} />
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   )}
                 </div>
 
-                {/* Input — comic-style typing area */}
-                <form onSubmit={handleSubmit} className="relative">
+                {/* Input */}
+                <form onSubmit={handleSubmit} className="mt-auto">
                   <div className="flex items-center gap-2 rounded-xl border border-zinc-700/50 bg-zinc-800/40 px-4 py-2.5 transition focus-within:border-amber-400/30">
                     <input
                       ref={inputRef}
@@ -369,7 +391,7 @@ export default function Hero() {
                 <Send className="h-3.5 w-3.5" />
               </button>
             </form>
-            {(answer || isAnswering) && (
+            {(messages.length > 1 || isAnswering) && (
               <motion.div
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -383,7 +405,7 @@ export default function Hero() {
                 ) : (
                   <div className="flex gap-3">
                     <MessageSquare className="mt-0.5 h-4 w-4 shrink-0 text-amber-400/50" />
-                    <p className="text-sm leading-6 text-zinc-300">{answer}</p>
+                    <p className="text-sm leading-6 text-zinc-300">{messages[messages.length - 1]?.text}</p>
                   </div>
                 )}
               </motion.div>
