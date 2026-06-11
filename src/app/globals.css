@@ -24,9 +24,10 @@ body {
   @apply bg-[#09090b] text-zinc-100;
 }
 
-/* ── Light theme ── */
+/* ── Light theme (warm cream) ── */
 body.light {
-  @apply bg-[#fafaf9] text-zinc-900;
+  background-color: #FAF7F2;
+  color: #1c1917;
 }
 
 /* ── Gradient text (muted, warm) ── */
@@ -51,8 +52,8 @@ body.light .gradient-text {
 }
 
 body.light .glass-effect {
-  background: rgba(255, 255, 255, 0.65);
-  border: 1px solid rgba(212, 212, 216, 0.4);
+  background: rgba(250, 247, 242, 0.75);
+  border: 1px solid rgba(214, 204, 187, 0.4);
 }
 
 /* ── Terminal prompt prefix ── */
@@ -98,8 +99,8 @@ body.light .card:hover {
 }
 
 body.light .agent-search-bar {
-  background: rgba(255, 255, 255, 0.6);
-  border-color: rgba(212, 212, 216, 0.5);
+  background: rgba(250, 247, 242, 0.7);
+  border-color: rgba(214, 204, 187, 0.5);
 }
 
 body.light .agent-search-bar:focus-within {
@@ -121,53 +122,53 @@ body.light .text-slate-500 { color: #a1a1aa; }
 body.light .text-slate-200 { color: #3f3f46; }
 body.light .text-slate-100 { color: #27272a; }
 
-/* ── Light theme border overrides ── */
+/* ── Light theme border overrides (warm stone) ── */
 body.light .border-zinc-800,
 body.light .border-zinc-800\/80,
-body.light .border-zinc-800\/60 { border-color: #e4e4e7; }
+body.light .border-zinc-800\/60 { border-color: #e7e0d6; }
 body.light .border-zinc-700,
-body.light .border-zinc-700\/60 { border-color: #d4d4d8; }
-body.light .border-slate-800 { border-color: #e4e4e7; }
-body.light .border-slate-700 { border-color: #d4d4d8; }
+body.light .border-zinc-700\/60 { border-color: #d6ccbb; }
+body.light .border-slate-800 { border-color: #e7e0d6; }
+body.light .border-slate-700 { border-color: #d6ccbb; }
 body.light .border-transparent { border-color: transparent; }
 
-/* ── Light theme background overrides ── */
+/* ── Light theme background overrides (warm cream) ── */
 body.light .bg-zinc-900,
 body.light .bg-zinc-900\/50,
 body.light .bg-zinc-900\/30,
-body.light .bg-zinc-900\/40 { background-color: rgba(255, 255, 255, 0.75); }
-body.light .bg-zinc-950 { background-color: #fafaf9; }
+body.light .bg-zinc-900\/40 { background-color: rgba(255, 252, 247, 0.8); }
+body.light .bg-zinc-950 { background-color: #FAF7F2; }
 body.light .bg-zinc-800\/40,
-body.light .bg-zinc-800\/50 { background-color: rgba(244, 244, 245, 0.8); }
-body.light .bg-zinc-100 { background-color: #18181b; }
+body.light .bg-zinc-800\/50 { background-color: rgba(245, 240, 232, 0.8); }
+body.light .bg-zinc-100 { background-color: #292524; }
 body.light .bg-slate-950\/70,
 body.light .bg-slate-950\/75,
 body.light .bg-slate-950\/80,
 body.light .bg-slate-950\/90,
 body.light .bg-slate-950\/95,
 body.light .bg-slate-900\/70,
-body.light .bg-slate-900\/80 { background-color: rgba(255, 255, 255, 0.85); }
-body.light .bg-slate-950 { background-color: #fafaf9; }
-body.light .bg-slate-900 { background-color: #ffffff; }
+body.light .bg-slate-900\/80 { background-color: rgba(255, 252, 247, 0.9); }
+body.light .bg-slate-950 { background-color: #FAF7F2; }
+body.light .bg-slate-900 { background-color: #FFFCF7; }
 
 /* ── Light theme nav/footer ── */
-body.light .bg-\[#09090b\]\/90 { background-color: rgba(250, 250, 249, 0.92); }
-body.light .bg-\[#0f0f12\]\/95 { background-color: rgba(255, 255, 255, 0.95); }
+body.light .bg-\[#09090b\]\/90 { background-color: rgba(250, 247, 242, 0.94); }
+body.light .bg-\[#0f0f12\]\/95 { background-color: rgba(255, 252, 247, 0.96); }
 body.light .bg-black\/60 { background-color: rgba(0, 0, 0, 0.3); }
 
 /* ── Light theme amber accents ── */
 body.light .text-amber-300,
-body.light .text-amber-300\/80 { color: #b45309; }
+body.light .text-amber-300\/80 { color: #92400e; }
 body.light .text-amber-400\/70,
 body.light .text-amber-400\/60,
-body.light .text-amber-400\/50 { color: #d97706; }
+body.light .text-amber-400\/50 { color: #b45309; }
 body.light .bg-amber-400\/10,
 body.light .bg-amber-400\/15,
-body.light .bg-amber-400\/20 { background-color: rgba(217, 119, 6, 0.1); }
-body.light .border-amber-400\/20 { border-color: rgba(217, 119, 6, 0.2); }
+body.light .bg-amber-400\/20 { background-color: rgba(180, 83, 9, 0.08); }
+body.light .border-amber-400\/20 { border-color: rgba(180, 83, 9, 0.15); }
 
 /* ── Light theme misc ── */
-body.light .shadow-black\/20 { --tw-shadow-color: rgba(0, 0, 0, 0.08); }
+body.light .shadow-black\/20 { --tw-shadow-color: rgba(0, 0, 0, 0.06); }
 body.light .bg-transparent { background-color: transparent; }
 
 /* ── Scrollbar (subtle) ── */
@@ -189,15 +190,15 @@ body.light .bg-transparent { background-color: transparent; }
 }
 
 body.light ::-webkit-scrollbar-track {
-  background: #fafaf9;
+  background: #FAF7F2;
 }
 
 body.light ::-webkit-scrollbar-thumb {
-  background: #d4d4d8;
+  background: #d6ccbb;
 }
 
 body.light ::-webkit-scrollbar-thumb:hover {
-  background: #a1a1aa;
+  background: #b8a898;
 }
 
 /* ── Selection ── */

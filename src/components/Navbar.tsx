@@ -44,7 +44,7 @@ export default function Navbar() {
               <Terminal className="h-4 w-4" />
             </span>
             <span className="font-semibold text-zinc-100 tracking-tight">
-              akshit<span className="text-amber-300/80">.</span>dev
+              akshit<span className="text-amber-300/80">.</span>ai
             </span>
           </Link>
 

@@ -5,7 +5,7 @@ export const profile = {
   "title": "AI Engineer | Agentic AI, RAG, LLMOps, Azure AI Foundry & Voice AI",
   "badge": "GATE 2025 Top 9% | OCI Data Science & GenAI Certified",
   "summary": "AI Engineer with production experience orchestrating agentic AI systems, RAG pipelines, LLM evaluation workflows, and Azure AI platforms. I build scalable AI products with FastAPI, Azure AI Foundry, PromptFlow, OpenAI, Gemini, MCP, vector retrieval, and real-time speech systems.",
-  "email": "akshitsinghak@yahoo.com",
+  "email": "akshit.singh.tech@gmail.com",
   "phone": "+918787232180",
   "location": "India",
   "links": {
@@ -26,7 +26,7 @@ export const profile = {
     },
     {
       "label": "Enterprise Workflows",
-      "value": "3+",
+      "value": "10+",
       "tone": "amber"
     },
     {
