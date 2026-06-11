@@ -179,24 +179,30 @@ export default function Hero() {
             {profile.badge}
           </motion.div>
 
+          {/* Heading Section */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mb-8"
+          >
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+              {profile.name}
+            </h1>
+            <p className="mt-3 text-lg text-amber-300/80 font-medium sm:text-xl">
+              {latestExperience.role} @ {latestExperience.company}
+            </p>
+            <p className="mt-1 text-sm text-zinc-500 font-mono">{latestExperience.period}</p>
+          </motion.div>
+
           <div className="grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             {/* Left — Content */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
             >
-
-              {/* Heading */}
-              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
-                {profile.name}
-              </h1>
-              <p className="mt-3 text-lg text-amber-300/80 font-medium sm:text-xl">
-                {latestExperience.role} @ {latestExperience.company}
-              </p>
-              <p className="mt-1 text-sm text-zinc-500 font-mono">{latestExperience.period}</p>
-
-              <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400">
+              <p className="max-w-2xl text-base leading-7 text-zinc-400">
                 {profile.summary}
               </p>
 
