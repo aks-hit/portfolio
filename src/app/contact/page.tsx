@@ -13,71 +13,65 @@ export default function Contact() {
       label: 'Email',
       value: profile.email,
       href: `mailto:${profile.email}`,
-      accent: 'text-cyan-300',
     },
     {
       icon: Linkedin,
       label: 'LinkedIn',
       value: 'akshit-singh-007',
       href: profile.links.linkedin,
-      accent: 'text-blue-300',
     },
     {
       icon: Github,
       label: 'GitHub',
       value: 'aks-hit',
       href: profile.links.github,
-      accent: 'text-amber-300',
     },
   ];
 
   return (
     <div className="pt-20">
       <Section title="Contact">
-        <div className="mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+        <div className="mx-auto max-w-3xl">
+          <motion.p
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-12 text-center"
+            className="mb-10 text-base text-zinc-400"
           >
-            <p className="text-xl text-slate-300">
-              Send a mission brief, collaboration idea, AI role, or project problem.
-              The fastest path is email.
-            </p>
-          </motion.div>
+            Have a project, collaboration idea, or AI role in mind? 
+            The fastest way to reach me is email.
+          </motion.p>
 
-          <div className="mb-12 grid gap-5 md:grid-cols-3">
+          <div className="mb-10 grid gap-4 md:grid-cols-3">
             {contactMethods.map((method, index) => (
               <motion.a
                 key={method.label}
                 href={method.href}
                 target={method.href.startsWith('http') ? '_blank' : undefined}
                 rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08 }}
-                className="rounded-xl border border-slate-800 bg-slate-950/70 p-5 transition hover:-translate-y-1 hover:border-cyan-400/60"
+                transition={{ delay: index * 0.06 }}
+                className="rounded-xl border border-zinc-800/60 bg-zinc-900/30 p-5 transition hover:border-zinc-700"
               >
-                <method.icon className={`mb-5 h-7 w-7 ${method.accent}`} />
-                <p className="mb-1 text-sm text-slate-400">{method.label}</p>
-                <p className="break-words font-semibold text-slate-200">{method.value}</p>
+                <method.icon className="mb-4 h-5 w-5 text-zinc-500" />
+                <p className="mb-1 text-xs text-zinc-500">{method.label}</p>
+                <p className="break-words text-sm font-medium text-zinc-300">{method.value}</p>
               </motion.a>
             ))}
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.32 }}
-            className="text-center"
+            transition={{ delay: 0.24 }}
           >
             <MagneticButton>
               <a
                 href={`mailto:${profile.email}`}
-                className="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-8 py-4 text-lg font-bold text-slate-950 shadow-lg shadow-cyan-950/30 transition hover:bg-cyan-300"
+                className="inline-flex items-center gap-2 rounded-md bg-zinc-100 px-6 py-3 text-sm font-semibold text-zinc-900 transition hover:bg-white"
               >
-                <Send className="h-5 w-5" />
-                Send mission brief
+                <Send className="h-4 w-4" />
+                Send a message
               </a>
             </MagneticButton>
           </motion.div>

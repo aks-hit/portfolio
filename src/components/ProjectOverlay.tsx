@@ -20,59 +20,59 @@ export default function ProjectOverlay({ project, onClose }: Props) {
     >
       <button
         aria-label="Close project details"
-        className="absolute inset-0 bg-black/70 backdrop-blur-md"
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
 
       <motion.div
-        initial={{ scale: 0.94, y: 28 }}
+        initial={{ scale: 0.96, y: 20 }}
         animate={{ scale: 1, y: 0 }}
-        exit={{ scale: 0.94, y: 28 }}
-        transition={{ type: 'spring', stiffness: 220, damping: 22 }}
-        className="relative z-10 max-h-[86vh] w-full max-w-4xl overflow-auto rounded-2xl border border-slate-700 bg-slate-950/95 p-6 shadow-2xl shadow-cyan-950/30 sm:p-8"
+        exit={{ scale: 0.96, y: 20 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+        className="relative z-10 max-h-[86vh] w-full max-w-3xl overflow-auto rounded-xl border border-zinc-800/80 bg-[#0f0f12]/95 backdrop-blur-xl p-6 shadow-2xl sm:p-8"
       >
-        <div className="absolute right-5 top-5 flex gap-3">
+        <div className="absolute right-4 top-4 flex gap-2">
           {project.link !== '#' && (
             <Link
               href={project.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg border border-slate-700 p-2 text-slate-300 transition hover:border-cyan-400 hover:text-cyan-200"
+              className="rounded-md border border-zinc-800 p-2 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
               aria-label="Open project"
             >
-              <ExternalLink className="h-5 w-5" />
+              <ExternalLink className="h-4 w-4" />
             </Link>
           )}
           <button
             onClick={onClose}
-            className="rounded-lg border border-slate-700 p-2 text-slate-300 transition hover:border-rose-400 hover:text-rose-200"
+            className="rounded-md border border-zinc-800 p-2 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
             aria-label="Close"
           >
-            <X className="h-5 w-5" />
+            <X className="h-4 w-4" />
           </button>
         </div>
 
-        <div className="mb-6 flex items-center gap-3 pr-24">
-          <div className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${project.gradient} text-white`}>
-            <Code2 className="h-6 w-6" />
+        <div className="mb-5 flex items-center gap-3 pr-20">
+          <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br ${project.gradient} text-white`}>
+            <Code2 className="h-5 w-5" />
           </div>
-          <h2 className="text-2xl font-black text-white sm:text-3xl">{project.title}</h2>
+          <h2 className="text-xl font-bold text-zinc-100 sm:text-2xl">{project.title}</h2>
         </div>
 
         <motion.p
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.08 }}
-          className="mb-4 text-lg leading-8 text-slate-300"
+          transition={{ delay: 0.06 }}
+          className="mb-4 text-base leading-7 text-zinc-300"
         >
           {project.description}
         </motion.p>
 
         <motion.p
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.16 }}
-          className="mb-6 rounded-xl border border-slate-800 bg-slate-900/70 p-4 leading-7 text-slate-300"
+          transition={{ delay: 0.12 }}
+          className="mb-5 rounded-lg border border-zinc-800/60 bg-zinc-900/40 p-4 text-sm leading-6 text-zinc-400"
         >
           {project.highlights}
         </motion.p>
@@ -80,13 +80,13 @@ export default function ProjectOverlay({ project, onClose }: Props) {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.24 }}
-          className="flex flex-wrap gap-2"
+          transition={{ delay: 0.18 }}
+          className="flex flex-wrap gap-1.5"
         >
           {project.tech.map((tech) => (
             <span
               key={tech}
-              className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 text-sm font-semibold text-cyan-200"
+              className="rounded-md border border-zinc-700/60 bg-zinc-800/40 px-2.5 py-1 text-xs font-medium text-zinc-300"
             >
               {tech}
             </span>

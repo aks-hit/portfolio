@@ -5,11 +5,10 @@ import { ThemeProvider } from '@/contexts/ThemeContext'
 import ClientLayout from '@/components/ClientLayout'
 import { profile } from '@/data/profile'
 
-
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: `${profile.name} - AI Engineer Portfolio`,
+  title: `${profile.name} — AI Engineer`,
   description: profile.summary,
 }
 

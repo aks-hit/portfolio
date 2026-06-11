@@ -9,30 +9,26 @@ import { projects } from '@/data/projects';
 export default function ProjectsPage() {
   const [activeProject, setActiveProject] = useState<number | null>(null);
 
-  const handleHover = (index: number) => {
-    setActiveProject(index);
-  };
-
   return (
     <section className="py-28 px-4 relative">
-      <div className="mx-auto mb-14 max-w-3xl text-center">
-        <p className="mb-3 text-sm font-bold uppercase tracking-[0.24em] text-emerald-300">
-          Mission archive
+      <div className="mx-auto mb-12 max-w-6xl">
+        <p className="mb-2 text-xs font-mono font-medium uppercase tracking-widest text-zinc-500">
+          <span className="text-amber-400/60">$</span> ls -la projects/
         </p>
-        <h1 className="text-5xl font-black gradient-text">Featured Projects</h1>
-        <p className="mt-5 text-lg leading-8 text-slate-400">
-          Hover a mission card to open the field report. Each project is treated as
-          a playable quest: problem, stack, outcome, and link when available.
+        <h1 className="text-4xl font-bold tracking-tight text-zinc-100 sm:text-5xl">Projects</h1>
+        <p className="mt-4 max-w-2xl text-base leading-7 text-zinc-400">
+          Hover a card to see details. Each project includes the problem, stack,
+          outcome, and link when available.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl mx-auto">
         {projects.map((project, index) => (
           <ProjectCard
             key={project.title}
             project={project}
             index={index}
-            onHover={() => handleHover(index)}
+            onHover={() => setActiveProject(index)}
           />
         ))}
       </div>

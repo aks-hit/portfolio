@@ -1,422 +1,279 @@
 'use client';
 
-import { FormEvent, KeyboardEvent, useMemo, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
-  Bot,
-  BrainCircuit,
-  Briefcase,
+  ArrowRight,
   Code2,
   Cpu,
-  Database,
   GitBranch,
   Github,
   Linkedin,
   Mail,
   MessageSquare,
-  RadioTower,
-  Rocket,
+  Search,
   Send,
-  ShieldCheck,
   Sparkles,
   Terminal,
-  Trophy,
-  Workflow,
+  X,
   Zap,
 } from 'lucide-react';
 import { profile } from '@/data/profile';
 import MagneticButton from '@/components/MagneticButton';
 
-const agentRoster = [
-  {
-    id: 'builder',
-    name: 'Builder Agent',
-    role: 'Turns AI ideas into shipped systems',
-    icon: Bot,
-    accent: 'cyan',
-    prompt: 'Ask about shipped AI products, voice agents, APIs, or latency wins.',
-    reply:
-      'I would lead with the production work: Azure agentic systems at Relay Human Cloud, the YourAllyStack AI interview platform, and the bilingual support voice agent. The strongest signal is that the systems have measurable outcomes: 70-80% faster inference, 90% less setup effort, sub-2s voice latency, and 75% less document processing effort.',
-    stats: ['Sub-2s voice AI', '90% setup reduction', 'FastAPI + Azure'],
-    suggestions: ['What has Akshit shipped?', 'Explain the voice agent', 'Show production impact'],
-  },
-  {
-    id: 'rag',
-    name: 'RAG Agent',
-    role: 'Explains retrieval, MCP, and LLM architecture',
-    icon: BrainCircuit,
-    accent: 'emerald',
-    prompt: 'Ask about RAG, vector search, MCP, LLM evaluation, or agentic workflows.',
-    reply:
-      'Akshit has worked with vector-based retrieval, MCP servers and clients, PromptFlow document ETL, schema-constrained parsing, and LLM-as-a-Judge validation. That combination is valuable because it covers the full RAG lifecycle: ingestion, extraction, retrieval, orchestration, evaluation, and compliance.',
-    stats: ['RAG pipelines', 'MCP servers', 'LLM-as-a-Judge'],
-    suggestions: ['Why is MCP useful?', 'How does he evaluate LLMs?', 'What RAG stack fits him?'],
-  },
-  {
-    id: 'mlops',
-    name: 'MLOps Agent',
-    role: 'Checks deployment and automation readiness',
-    icon: Workflow,
-    accent: 'amber',
-    prompt: 'Ask about CI/CD, static deployment, GitHub Actions, MLOps, or portfolio sync.',
-    reply:
-      'This portfolio now runs through a content sync pipeline: resume and LinkedIn JSON generate typed profile data, GitHub Actions validates the build, and Vercel deploys the production version from main. For AI projects, the same story appears in GitHub Actions, CML, Docker, Hugging Face, MLOps, and evaluation pipelines.',
-    stats: ['GitHub Actions', 'Static export', 'Content sync'],
-    suggestions: ['How does portfolio CI/CD work?', 'What should I update first?', 'How is this ATS-friendly?'],
-  },
-  {
-    id: 'recruiter',
-    name: 'Recruiter Agent',
-    role: 'Summarizes hiring signal fast',
-    icon: Briefcase,
-    accent: 'rose',
-    prompt: 'Ask for recruiter summary, ATS keywords, best projects, or interview pitch.',
-    reply:
-      'The recruiter pitch is sharp: AI Engineer with production Azure AI Foundry, PromptFlow, RAG, MCP, FastAPI, Gemini, OpenAI, and real-time speech systems. He has quantified impact, current job experience, GATE validation, and projects that map directly to agentic AI roles.',
-    stats: ['Azure AI', 'Agentic AI', 'GATE top 9%'],
-    suggestions: ['Give me a 30-second pitch', 'Which skills matter most?', 'Why hire Akshit?'],
-  },
-] as const;
+/* ── Typewriter placeholder suggestions ── */
+const placeholders = [
+  'What has Akshit shipped?',
+  'Tell me about his RAG experience',
+  'What is his tech stack?',
+  'Explain the voice agent project',
+  'Why should I hire Akshit?',
+  'What Azure services does he use?',
+  'What are his top skills?',
+];
 
-type AgentId = (typeof agentRoster)[number]['id'];
-type Message = {
-  id: string;
-  role: 'agent' | 'visitor';
-  text: string;
-};
+/* ── Knowledge base for answering questions ── */
+function getAnswer(question: string): string {
+  const q = question.toLowerCase();
 
-const toneClasses: Record<string, string> = {
-  cyan: 'border-cyan-400/40 bg-cyan-400/10 text-cyan-200',
-  emerald: 'border-emerald-400/40 bg-emerald-400/10 text-emerald-200',
-  amber: 'border-amber-400/40 bg-amber-400/10 text-amber-200',
-  rose: 'border-rose-400/40 bg-rose-400/10 text-rose-200',
-};
-
-const statTextClasses: Record<string, string> = {
-  cyan: 'text-cyan-300',
-  emerald: 'text-emerald-300',
-  amber: 'text-amber-300',
-  rose: 'text-rose-300',
-};
-
-function getAgentAnswer(agentId: AgentId, question: string) {
-  const lowerQuestion = question.toLowerCase();
-  const latestExperience = profile.experiences[0];
-
-  if (lowerQuestion.includes('skill') || lowerQuestion.includes('ats') || lowerQuestion.includes('keyword')) {
-    return 'For ATS, the strongest keywords are Agentic AI, RAG, LLMOps, Azure AI Foundry, PromptFlow, Azure OpenAI, MCP, LangChain, LangGraph, LlamaIndex, vector databases, FastAPI, WebSockets, Docker, GitHub Actions, LLM evaluation, guardrails, and model monitoring. I added these across the skills section while keeping the resume-backed skills prominent.';
+  if (q.includes('skill') || q.includes('ats') || q.includes('keyword') || q.includes('tech stack') || q.includes('stack')) {
+    return 'Core stack: Agentic AI, RAG, LLMOps, Azure AI Foundry, PromptFlow, MCP, LangChain, LangGraph, FastAPI, OpenAI, Gemini, Docker, GitHub Actions. Strong across the full AI product lifecycle — from retrieval to deployment.';
+  }
+  if (q.includes('rag') || q.includes('retrieval') || q.includes('vector')) {
+    return 'Akshit has production RAG experience: document ETL with Azure Document Intelligence, vector retrieval, MCP-backed agent architectures, PromptFlow orchestration, structured extraction, and LLM-as-a-Judge validation. End-to-end, not just prompts.';
+  }
+  if (q.includes('mcp') || q.includes('model context')) {
+    return 'MCP gives agents a clean interface to tools and context providers. Akshit has instrumented RAG pipelines with MCP servers/clients across 4+ integrated services — a strong signal for agentic AI roles.';
+  }
+  if (q.includes('voice') || q.includes('speech') || q.includes('twilio') || q.includes('deepgram')) {
+    return 'Built a bilingual voice agent with Twilio, Deepgram, OpenAI, SQLite & FastAPI. Sub-2s latency, concurrent call handling, sentiment-aware responses. Also built ASR-to-evaluation workflows with Azure STT/TTS.';
+  }
+  if (q.includes('azure') || q.includes('cloud') || q.includes('promptflow')) {
+    return `Current role at ${profile.experiences[0].company}: ${profile.experiences[0].points[0]}`;
+  }
+  if (q.includes('project') || q.includes('shipped') || q.includes('built') || q.includes('impact')) {
+    return `Top projects: ${profile.projects.slice(0, 3).map(p => p.title).join(', ')}. Each has measurable outcomes — latency reduction, automation gains, and deployment-ready architectures.`;
+  }
+  if (q.includes('hire') || q.includes('why') || q.includes('pitch') || q.includes('summary')) {
+    return 'AI Engineer who ships production systems, not demos. Azure AI Foundry + PromptFlow + RAG + MCP + FastAPI + real-time speech, backed by quantified impact and GATE/OCI validation. Builds things that work at scale.';
+  }
+  if (q.includes('experience') || q.includes('work') || q.includes('job') || q.includes('role')) {
+    return `Currently an AI Engineer at ${profile.experiences[0].company}. Previously interned at ${profile.experiences[1].company} building AI interview platforms. Research intern at ${profile.experiences[2].company} working on sleep stage classification with deep learning.`;
+  }
+  if (q.includes('education') || q.includes('degree') || q.includes('college') || q.includes('gate')) {
+    return `${profile.education.degree} from ${profile.education.school} (${profile.education.score}). GATE 2025 Data Science & AI — AIR 5246, top 9% nationwide.`;
   }
 
-  if (lowerQuestion.includes('rag') || lowerQuestion.includes('retrieval') || lowerQuestion.includes('vector')) {
-    return 'Akshit is strongest in applied RAG: document ETL with Azure Document Intelligence, vector-based retrieval, MCP-backed agent architecture, PromptFlow orchestration, structured extraction, and LLM-as-a-Judge validation. That reads well for enterprise AI roles because it is not just prompt work; it is ingestion to evaluation.';
-  }
-
-  if (lowerQuestion.includes('mcp') || lowerQuestion.includes('model context')) {
-    return 'MCP matters because it gives agents a clean way to connect with tools, services, and context providers. Akshit has resume-backed experience instrumenting RAG pipelines with MCP servers and clients across 4+ integrated services, which is a strong current-market signal for agentic AI work.';
-  }
-
-  if (lowerQuestion.includes('voice') || lowerQuestion.includes('speech') || lowerQuestion.includes('twilio') || lowerQuestion.includes('deepgram')) {
-    return 'The voice AI story is practical: a bilingual support agent with Twilio, Deepgram, OpenAI, SQLite, and FastAPI, plus ASR-to-evaluation workflows with Azure STT/TTS and WebSockets. The portfolio highlights sub-2s voice latency and reduced manual workload.';
-  }
-
-  if (lowerQuestion.includes('azure') || lowerQuestion.includes('cloud') || lowerQuestion.includes('promptflow')) {
-    return `The current role at ${latestExperience.company} is the anchor: ${latestExperience.points[0]} It also includes Azure Document Intelligence, Azure Speech Services, vector retrieval, and enterprise workflow orchestration.`;
-  }
-
-  if (lowerQuestion.includes('project') || lowerQuestion.includes('shipped') || lowerQuestion.includes('impact')) {
-    return `Top projects to inspect: ${profile.projects
-      .slice(0, 3)
-      .map((project) => project.title)
-      .join(', ')}. The site now frames them by measurable outcomes: latency, automation, evaluation quality, and deployment readiness.`;
-  }
-
-  if (lowerQuestion.includes('ci') || lowerQuestion.includes('deploy') || lowerQuestion.includes('update')) {
-    return 'The CI/CD loop is Vercel-friendly now: edit content/resume.json or content/linkedin.json, run the sync script, build the static export, and push main. GitHub Actions validates the build without scheduled Pages deployment, then Vercel redeploys from main.';
-  }
-
-  if (lowerQuestion.includes('pitch') || lowerQuestion.includes('hire') || lowerQuestion.includes('summary')) {
-    return 'Akshit is an AI Engineer who can build production agentic systems, not just demos. His strongest pitch is Azure AI Foundry + PromptFlow + RAG + MCP + FastAPI + real-time speech, backed by quantified impact and GATE/OCI validation.';
-  }
-
-  const fallback = agentRoster.find((agent) => agent.id === agentId)?.reply;
-  return fallback ?? agentRoster[0].reply;
+  return profile.summary;
 }
 
-export default function AgentMissionHub() {
-  const [activeAgentId, setActiveAgentId] = useState<AgentId>('builder');
-  const questionInputRef = useRef<HTMLInputElement>(null);
-  const [question, setQuestion] = useState('');
-  const [messagesByAgent, setMessagesByAgent] = useState<Record<AgentId, Message[]>>({
-    builder: [{ id: 'builder-intro', role: 'agent', text: agentRoster[0].reply }],
-    rag: [{ id: 'rag-intro', role: 'agent', text: agentRoster[1].reply }],
-    mlops: [{ id: 'mlops-intro', role: 'agent', text: agentRoster[2].reply }],
-    recruiter: [{ id: 'recruiter-intro', role: 'agent', text: agentRoster[3].reply }],
-  });
+/* ── Typewriter hook ── */
+function useTypewriter(words: string[], typingSpeed = 60, deletingSpeed = 35, pauseTime = 2000) {
+  const [text, setText] = useState('');
+  const [wordIndex, setWordIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const activeAgent = useMemo(
-    () => agentRoster.find((agent) => agent.id === activeAgentId) ?? agentRoster[0],
-    [activeAgentId]
-  );
+  useEffect(() => {
+    const currentWord = words[wordIndex];
+
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        setText(currentWord.slice(0, text.length + 1));
+        if (text.length + 1 === currentWord.length) {
+          setTimeout(() => setIsDeleting(true), pauseTime);
+        }
+      } else {
+        setText(currentWord.slice(0, text.length - 1));
+        if (text.length === 0) {
+          setIsDeleting(false);
+          setWordIndex((prev) => (prev + 1) % words.length);
+        }
+      }
+    }, isDeleting ? deletingSpeed : typingSpeed);
+
+    return () => clearTimeout(timeout);
+  }, [text, isDeleting, wordIndex, words, typingSpeed, deletingSpeed, pauseTime]);
+
+  return text;
+}
+
+export default function Hero() {
+  const [question, setQuestion] = useState('');
+  const [answer, setAnswer] = useState<string | null>(null);
+  const [isAnswering, setIsAnswering] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const typedPlaceholder = useTypewriter(placeholders);
+
   const featuredProjects = profile.projects.slice(0, 3);
   const latestExperience = profile.experiences[0];
-  const ActiveIcon = activeAgent.icon;
-  const activeMessages = messagesByAgent[activeAgentId];
 
-  function activateAgent(agentId: AgentId) {
-    setActiveAgentId(agentId);
+  function handleAsk(promptText: string) {
+    const trimmed = promptText.trim();
+    if (!trimmed) return;
+
+    setIsAnswering(true);
+    setAnswer(null);
+
+    // Simulate slight delay for "thinking" feel
+    setTimeout(() => {
+      setAnswer(getAnswer(trimmed));
+      setIsAnswering(false);
+    }, 400);
+  }
+
+  function handleSubmit(e: FormEvent) {
+    e.preventDefault();
+    handleAsk(question);
+  }
+
+  function handleClear() {
     setQuestion('');
-  }
-
-  function askAgent(promptText: string) {
-    const trimmedQuestion = promptText.trim();
-    if (!trimmedQuestion) return;
-
-    const answer = getAgentAnswer(activeAgentId, trimmedQuestion);
-    setMessagesByAgent((current) => ({
-      ...current,
-      [activeAgentId]: [
-        ...current[activeAgentId],
-        { id: `${activeAgentId}-${Date.now()}-q`, role: 'visitor', text: trimmedQuestion },
-        { id: `${activeAgentId}-${Date.now()}-a`, role: 'agent', text: answer },
-      ],
-    }));
-    setQuestion('');
-    if (questionInputRef.current) {
-      questionInputRef.current.value = '';
-    }
-  }
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    askAgent(questionInputRef.current?.value ?? question);
-  }
-
-  function handleQuestionKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-    if (event.key === 'Enter') {
-      event.preventDefault();
-      askAgent(event.currentTarget.value);
-    }
+    setAnswer(null);
+    inputRef.current?.focus();
   }
 
   return (
     <div className="relative overflow-hidden">
-      <div className="site-backdrop fixed inset-0 -z-10">
-        <div className="absolute inset-0 neural-grid opacity-70" />
-        <div className="theme-wash absolute inset-0" />
-      </div>
-
-      <section className="px-4 pt-24 pb-14">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[0.94fr_1.06fr]">
+      {/* ── Hero Section ── */}
+      <section className="px-4 pt-28 pb-16">
+        <div className="mx-auto max-w-6xl">
           <motion.div
-            initial={{ opacity: 0, y: 22 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55 }}
-            className="space-y-6"
+            transition={{ duration: 0.5 }}
+            className="max-w-3xl"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-sm font-semibold text-cyan-100">
-              <Sparkles className="h-4 w-4" />
+            {/* Terminal badge */}
+            <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900/50 px-3 py-1.5 text-xs font-mono text-zinc-400">
+              <Terminal className="h-3 w-3 text-amber-400/70" />
               {profile.badge}
             </div>
 
-            <div className="space-y-5">
-              <p className="text-sm font-semibold uppercase tracking-[0.28em] text-emerald-300">
-                Interactive AI command center
-              </p>
-              <h1 className="max-w-5xl text-4xl font-black leading-[1.05] text-white sm:text-5xl lg:text-7xl">
-                Build with the AI engineer who ships{' '}
-                <span className="gradient-text">agents into production</span>
-              </h1>
-              <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8">
-                {profile.summary}
-              </p>
-            </div>
+            {/* Heading */}
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+              {profile.name}
+            </h1>
+            <p className="mt-3 text-lg text-amber-300/80 font-medium sm:text-xl">
+              AI Engineer
+            </p>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400 sm:text-lg sm:leading-8">
+              {profile.summary}
+            </p>
 
-            <div className="flex flex-wrap gap-3">
+            {/* CTAs */}
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <MagneticButton>
                 <a
                   href={`mailto:${profile.email}`}
-                  className="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-5 py-3 font-bold text-slate-950 shadow-lg shadow-cyan-950/30 transition hover:bg-cyan-300"
+                  className="inline-flex items-center gap-2 rounded-md bg-zinc-100 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-white"
                 >
-                  <Mail className="h-5 w-5" />
-                  Start a mission
+                  <Mail className="h-4 w-4" />
+                  Get in touch
                 </a>
               </MagneticButton>
               <MagneticButton>
                 <Link
                   href="/projects"
-                  className="inline-flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-900/70 px-5 py-3 font-bold text-slate-100 transition hover:border-emerald-300 hover:text-emerald-200"
+                  className="inline-flex items-center gap-2 rounded-md border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition hover:border-zinc-500 hover:text-zinc-100"
                 >
-                  <Code2 className="h-5 w-5" />
-                  Inspect builds
+                  <Code2 className="h-4 w-4" />
+                  View work
                 </Link>
               </MagneticButton>
               <a
                 href={profile.links.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 text-slate-200 transition hover:border-blue-300 hover:text-blue-200"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-800 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
                 aria-label="LinkedIn"
               >
-                <Linkedin className="h-5 w-5" />
+                <Linkedin className="h-4 w-4" />
               </a>
               <a
                 href={profile.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 w-12 items-center justify-center rounded-lg border border-slate-700 bg-slate-900/70 text-slate-200 transition hover:border-amber-300 hover:text-amber-200"
+                className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-800 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
                 aria-label="GitHub"
               >
-                <Github className="h-5 w-5" />
+                <Github className="h-4 w-4" />
               </a>
             </div>
           </motion.div>
 
+          {/* ── Ask Me Anything Bar ── */}
           <motion.div
-            initial={{ opacity: 0, y: 28 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.55 }}
-            className="agent-console overflow-hidden rounded-2xl border border-slate-700/80 bg-slate-950/80 shadow-2xl shadow-cyan-950/30 backdrop-blur-xl"
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="mt-14 max-w-2xl"
           >
-            <div className="flex items-center justify-between border-b border-slate-800 px-5 py-4">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-cyan-400/10 text-cyan-200">
-                  <Terminal className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="font-bold text-white">Live Agent Console</p>
-                  <p className="text-sm text-slate-400">Ask role-specific questions</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-xs font-semibold text-emerald-300">
-                <RadioTower className="h-4 w-4" />
-                local AI mode
-              </div>
-            </div>
-
-            <div className="grid gap-3 p-4 sm:grid-cols-2">
-              {agentRoster.map((agent) => {
-                const Icon = agent.icon;
-                const isActive = agent.id === activeAgent.id;
-                return (
-                  <button
-                    key={agent.id}
-                    type="button"
-                    onClick={() => activateAgent(agent.id)}
-                    onPointerDown={() => activateAgent(agent.id)}
-                    onMouseEnter={() => activateAgent(agent.id)}
-                    onFocus={() => activateAgent(agent.id)}
-                    className={`rounded-xl border p-4 text-left transition ${
-                      isActive
-                        ? toneClasses[agent.accent]
-                        : 'border-slate-800 bg-slate-900/80 text-slate-300 hover:border-slate-600'
-                    }`}
-                  >
-                    <div className="mb-3 flex items-center justify-between gap-3">
-                      <Icon className="h-5 w-5" />
-                      <span className="rounded-full border border-current px-2 py-0.5 text-[11px] font-bold uppercase">
-                        agent
-                      </span>
-                    </div>
-                    <p className="font-bold">{agent.name}</p>
-                    <p className="mt-1 text-sm opacity-80">{agent.role}</p>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="border-t border-slate-800 p-5">
-              <div className="mb-4 flex items-center gap-3">
-                <div className={`flex h-11 w-11 items-center justify-center rounded-lg border ${toneClasses[activeAgent.accent]}`}>
-                  <ActiveIcon className="h-5 w-5" />
-                </div>
-                <div>
-                  <p className="font-bold text-white">{activeAgent.name}</p>
-                  <p className="text-sm text-slate-400">{activeAgent.prompt}</p>
-                </div>
-              </div>
-
-              <div className="mb-4 flex flex-wrap gap-2">
-                {activeAgent.suggestions.map((suggestion) => (
-                  <button
-                    key={suggestion}
-                    type="button"
-                    onPointerDown={(event) => {
-                      event.preventDefault();
-                      askAgent(suggestion);
-                    }}
-                    onKeyDown={(event) => {
-                      if (event.key === 'Enter' || event.key === ' ') {
-                        event.preventDefault();
-                        askAgent(suggestion);
-                      }
-                    }}
-                    className="rounded-full border border-slate-700 bg-slate-900/80 px-3 py-1.5 text-xs font-semibold text-slate-300 transition hover:border-cyan-400/60 hover:text-cyan-200"
-                  >
-                    {suggestion}
-                  </button>
-                ))}
-              </div>
-
-              <div className="max-h-[270px] space-y-3 overflow-y-auto rounded-xl border border-slate-800 bg-slate-900/70 p-4">
-                {activeMessages.slice(-6).map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex gap-3 ${message.role === 'visitor' ? 'justify-end' : 'justify-start'}`}
-                  >
-                    {message.role === 'agent' && (
-                      <MessageSquare className="mt-1 h-5 w-5 shrink-0 text-slate-500" />
-                    )}
-                    <p
-                      className={`max-w-[88%] rounded-xl px-4 py-3 text-sm leading-6 ${
-                        message.role === 'visitor'
-                          ? 'bg-cyan-400 text-slate-950'
-                          : 'border border-slate-800 bg-slate-950/70 text-slate-300'
-                      }`}
-                    >
-                      {message.text}
-                    </p>
-                  </div>
-                ))}
-              </div>
-
-              <form onSubmit={handleSubmit} className="mt-4 flex gap-2">
-                <input
-                  ref={questionInputRef}
-                  value={question}
-                  onChange={(event) => setQuestion(event.target.value)}
-                  onKeyDown={handleQuestionKeyDown}
-                  placeholder={`Ask ${activeAgent.name}...`}
-                  className="min-w-0 flex-1 rounded-lg border border-slate-700 bg-slate-950/80 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-cyan-400"
-                />
+            <form onSubmit={handleSubmit} className="agent-search-bar flex items-center gap-3 px-5 py-3">
+              <Search className="h-4 w-4 shrink-0 text-zinc-500" />
+              <input
+                ref={inputRef}
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder={typedPlaceholder + '|'}
+                className="min-w-0 flex-1 bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
+              />
+              {question && (
                 <button
-                  type="submit"
-                  onPointerDown={() => askAgent(questionInputRef.current?.value ?? question)}
-                  className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-cyan-400 text-slate-950 transition hover:bg-cyan-300"
-                  aria-label="Ask agent"
+                  type="button"
+                  onClick={handleClear}
+                  className="shrink-0 text-zinc-600 hover:text-zinc-400 transition"
                 >
-                  <Send className="h-5 w-5" />
+                  <X className="h-4 w-4" />
                 </button>
-              </form>
-            </div>
+              )}
+              <button
+                type="submit"
+                className="shrink-0 rounded-full bg-amber-400/10 p-2 text-amber-300 transition hover:bg-amber-400/20"
+                aria-label="Ask"
+              >
+                <Send className="h-3.5 w-3.5" />
+              </button>
+            </form>
+
+            {/* Answer display */}
+            {(answer || isAnswering) && (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="mt-3 rounded-xl border border-zinc-800/60 bg-zinc-900/40 backdrop-blur-sm px-5 py-4"
+              >
+                {isAnswering ? (
+                  <div className="flex items-center gap-2 text-sm text-zinc-500">
+                    <Sparkles className="h-3.5 w-3.5 animate-pulse text-amber-400/60" />
+                    Thinking...
+                  </div>
+                ) : (
+                  <div className="flex gap-3">
+                    <MessageSquare className="mt-0.5 h-4 w-4 shrink-0 text-amber-400/50" />
+                    <p className="text-sm leading-6 text-zinc-300">{answer}</p>
+                  </div>
+                )}
+              </motion.div>
+            )}
           </motion.div>
         </div>
       </section>
 
-      <section className="px-4 pb-20">
-        <div className="mx-auto grid max-w-7xl gap-4 md:grid-cols-4">
-          {profile.stats.map((stat) => (
+      {/* ── Stats Row ── */}
+      <section className="px-4 pb-16">
+        <div className="mx-auto grid max-w-6xl gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {profile.stats.map((stat, i) => (
             <motion.div
               key={stat.label}
-              initial={{ opacity: 0, y: 18 }}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="rounded-xl border border-slate-800 bg-slate-950/70 p-5 backdrop-blur"
+              transition={{ delay: i * 0.06 }}
+              className="rounded-lg border border-zinc-800/60 bg-zinc-900/30 p-5"
             >
-              <p className={`text-4xl font-black ${statTextClasses[stat.tone] ?? 'text-cyan-300'}`}>
-                {stat.value}
-              </p>
-              <p className="mt-2 text-sm font-semibold uppercase tracking-[0.18em] text-slate-400">
+              <p className="text-3xl font-bold text-zinc-100">{stat.value}</p>
+              <p className="mt-1.5 text-xs font-medium uppercase tracking-widest text-zinc-500">
                 {stat.label}
               </p>
             </motion.div>
@@ -424,45 +281,45 @@ export default function AgentMissionHub() {
         </div>
       </section>
 
-      <section className="px-4 pb-24">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      {/* ── Featured Projects ── */}
+      <section className="px-4 pb-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="mb-8 flex items-end justify-between">
             <div>
-              <p className="mb-3 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-[0.22em] text-amber-300">
-                <Trophy className="h-4 w-4" />
-                Mission board
+              <p className="mb-2 text-xs font-mono font-medium uppercase tracking-widest text-zinc-500">
+                <span className="text-amber-400/60">$</span> ls projects/
               </p>
-              <h2 className="text-3xl font-black text-white md:text-5xl">
-                Pick a quest, inspect the system
+              <h2 className="text-3xl font-bold text-zinc-100 sm:text-4xl">
+                Featured work
               </h2>
             </div>
             <Link
               href="/projects"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-700 bg-slate-900/70 px-4 py-3 font-bold text-slate-200 transition hover:border-cyan-300 hover:text-cyan-200"
+              className="hidden sm:inline-flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-zinc-200"
             >
-              View all projects
-              <Rocket className="h-4 w-4" />
+              View all
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
 
-          <div className="grid gap-5 lg:grid-cols-3">
+          <div className="grid gap-4 lg:grid-cols-3">
             {featuredProjects.map((project, index) => (
               <motion.article
                 key={project.id}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.08 }}
-                className="group rounded-xl border border-slate-800 bg-slate-950/75 p-5 transition hover:-translate-y-1 hover:border-cyan-400/50"
+                className="group rounded-xl border border-zinc-800/60 bg-zinc-900/30 p-5 transition hover:border-zinc-700"
               >
-                <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${project.gradient} text-white shadow-lg shadow-slate-950/50`}>
-                  {index === 0 ? <Zap className="h-6 w-6" /> : index === 1 ? <Cpu className="h-6 w-6" /> : <GitBranch className="h-6 w-6" />}
+                <div className={`mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br ${project.gradient} text-white shadow-lg shadow-black/20`}>
+                  {index === 0 ? <Zap className="h-5 w-5" /> : index === 1 ? <Cpu className="h-5 w-5" /> : <GitBranch className="h-5 w-5" />}
                 </div>
-                <h3 className="text-xl font-bold text-white">{project.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-slate-400">{project.highlights}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
+                <h3 className="text-lg font-semibold text-zinc-100">{project.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-zinc-400">{project.highlights}</p>
+                <div className="mt-4 flex flex-wrap gap-1.5">
                   {project.tech.slice(0, 4).map((tech) => (
-                    <span key={tech} className="rounded-full border border-slate-700 px-3 py-1 text-xs font-semibold text-slate-300">
+                    <span key={tech} className="rounded-md border border-zinc-800 px-2 py-0.5 text-xs text-zinc-400">
                       {tech}
                     </span>
                   ))}
@@ -470,45 +327,31 @@ export default function AgentMissionHub() {
               </motion.article>
             ))}
           </div>
+
+          <Link
+            href="/projects"
+            className="mt-6 sm:hidden inline-flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-zinc-200"
+          >
+            View all projects
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
       </section>
 
-      <section className="px-4 pb-24">
-        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.92fr_1.08fr]">
-          <div className="rounded-xl border border-slate-800 bg-slate-950/75 p-6">
-            <div className="mb-5 flex items-center gap-3 text-emerald-300">
-              <ShieldCheck className="h-6 w-6" />
-              <h2 className="text-2xl font-black text-white">Career signal</h2>
-            </div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-slate-500">
-              Current node
+      {/* ── Current Role ── */}
+      <section className="px-4 pb-20">
+        <div className="mx-auto max-w-6xl">
+          <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/30 p-6 sm:p-8">
+            <p className="mb-4 text-xs font-mono font-medium uppercase tracking-widest text-zinc-500">
+              <span className="text-amber-400/60">$</span> cat current_role.md
             </p>
-            <h3 className="mt-3 text-2xl font-bold text-cyan-200">
+            <h3 className="text-xl font-bold text-zinc-100 sm:text-2xl">
               {latestExperience.role}
             </h3>
-            <p className="mt-1 text-lg text-slate-300">{latestExperience.company}</p>
-            <p className="mt-4 text-slate-400">{latestExperience.points[0]}</p>
-          </div>
-
-          <div className="rounded-xl border border-slate-800 bg-slate-950/75 p-6">
-            <div className="mb-5 flex items-center gap-3 text-amber-300">
-              <Database className="h-6 w-6" />
-              <h2 className="text-2xl font-black text-white">Auto-update loop</h2>
-            </div>
-            <div className="grid gap-3 md:grid-cols-3">
-              {[
-                ['1', 'Edit resume or LinkedIn JSON'],
-                ['2', 'Generator refreshes portfolio data'],
-                ['3', 'Vercel deploys from main'],
-              ].map(([step, text]) => (
-                <div key={step} className="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
-                  <p className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-amber-300 text-sm font-black text-slate-950">
-                    {step}
-                  </p>
-                  <p className="text-sm font-semibold leading-6 text-slate-300">{text}</p>
-                </div>
-              ))}
-            </div>
+            <p className="mt-1 text-zinc-400">{latestExperience.company} · {latestExperience.period}</p>
+            <p className="mt-4 text-sm leading-7 text-zinc-400">
+              {latestExperience.points[0]}
+            </p>
           </div>
         </div>
       </section>

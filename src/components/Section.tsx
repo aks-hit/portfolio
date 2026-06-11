@@ -1,21 +1,20 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { ReactNode } from 'react';
 
 interface SectionProps {
   title: string;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export default function Section({ title, children }: SectionProps) {
   return (
-    <section className="py-20 px-4">
-      <div className="max-w-7xl mx-auto">
+    <section className="px-4 py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl">
         <motion.h1
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-5xl md:text-6xl font-bold mb-12 text-center gradient-text"
+          className="mb-10 text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl"
         >
           {title}
         </motion.h1>

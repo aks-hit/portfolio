@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Bot, Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Sun, Terminal, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from '@/contexts/ThemeContext';
 
@@ -33,70 +33,71 @@ export default function Navbar() {
     <nav
       className={`fixed w-full z-50 transition-all duration-300 ${
         scrolled
-          ? 'border-b border-slate-800 bg-slate-950/95 shadow-lg backdrop-blur-xl'
-          : 'border-b border-slate-900/60 bg-slate-950/70 backdrop-blur-md'
+          ? 'border-b border-zinc-800/80 bg-[#09090b]/90 shadow-lg backdrop-blur-xl'
+          : 'border-b border-transparent bg-transparent backdrop-blur-sm'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          <Link href="/" className="flex items-center gap-2 text-xl font-black text-white">
-            <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-400 text-slate-950">
-              <Bot className="h-5 w-5" />
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <span className="flex h-8 w-8 items-center justify-center rounded-md bg-amber-400/10 border border-amber-400/20 text-amber-300 transition group-hover:bg-amber-400/15">
+              <Terminal className="h-4 w-4" />
             </span>
-            <span className="gradient-text">Akshit OS</span>
+            <span className="font-semibold text-zinc-100 tracking-tight">
+              akshit<span className="text-amber-300/80">.</span>dev
+            </span>
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.path}
                 href={item.path}
-                className={`font-medium transition-colors duration-300 relative group ${
-                  pathname === item.path ? 'text-cyan-400' : 'hover:text-cyan-400'
+                className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
+                  pathname === item.path
+                    ? 'text-amber-300 bg-amber-400/10'
+                    : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
                 }`}
               >
                 {item.name}
-                <span
-                  className={`absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-cyan-400 to-blue-500 transform origin-left transition-transform duration-300 ${
-                    pathname === item.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'
-                  }`}
-                />
               </Link>
             ))}
-            
+
+            <div className="w-px h-5 bg-zinc-800 mx-2" />
+
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg glass-effect hover:bg-cyan-500/20 transition-all group"
+              className="p-2 rounded-md text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800/50 transition-all"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <Sun className="w-5 h-5 text-yellow-400 group-hover:rotate-180 transition-transform duration-300" />
+                <Sun className="w-4 h-4" />
               ) : (
-                <Moon className="w-5 h-5 text-blue-600 group-hover:-rotate-12 transition-transform duration-300" />
+                <Moon className="w-4 h-4" />
               )}
             </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center gap-2">
+          <div className="md:hidden flex items-center gap-1">
             <button
               onClick={toggleTheme}
-              className="p-2 rounded-lg glass-effect"
+              className="p-2 rounded-md text-zinc-500 hover:text-zinc-300 transition"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? (
-                <Sun className="w-5 h-5 text-yellow-400" />
+                <Sun className="w-4 h-4" />
               ) : (
-                <Moon className="w-5 h-5 text-blue-600" />
+                <Moon className="w-4 h-4" />
               )}
             </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg glass-effect"
+              className="p-2 rounded-md text-zinc-400 hover:text-zinc-200 transition"
             >
-              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -109,18 +110,18 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-effect border-t border-slate-800"
+            className="md:hidden glass-effect border-t border-zinc-800/60"
           >
-            <div className="px-4 py-4 space-y-3">
+            <div className="px-4 py-3 space-y-1">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   href={item.path}
                   onClick={() => setIsOpen(false)}
-                  className={`block py-2 px-4 rounded-lg transition-all ${
+                  className={`block py-2 px-3 rounded-md text-sm transition-all ${
                     pathname === item.path
-                      ? 'bg-cyan-500/20 text-cyan-400'
-                      : 'hover:bg-slate-800'
+                      ? 'bg-amber-400/10 text-amber-300'
+                      : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800/50'
                   }`}
                 >
                   {item.name}

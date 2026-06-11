@@ -13,7 +13,6 @@ export default function CursorFollower() {
   useEffect(() => {
     setMounted(true);
 
-    // Disable on touch / coarse pointer devices
     if (window.matchMedia('(pointer: coarse)').matches) {
       return;
     }
@@ -37,9 +36,8 @@ export default function CursorFollower() {
 
   if (!mounted) return null;
 
-  const cursorColor = theme === 'dark' ? 'bg-cyan-400' : 'bg-blue-600';
-  const cursorRingColor =
-    theme === 'dark' ? 'bg-cyan-400/30' : 'bg-blue-600/30';
+  const cursorColor = theme === 'dark' ? 'bg-amber-300' : 'bg-amber-600';
+  const cursorRingColor = theme === 'dark' ? 'bg-amber-300/20' : 'bg-amber-600/20';
 
   return (
     <>
