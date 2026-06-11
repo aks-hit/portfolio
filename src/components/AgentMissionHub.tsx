@@ -168,18 +168,24 @@ export default function Hero() {
       {/* ── Hero Section ── */}
       <section className="px-4 pt-28 pb-16">
         <div className="mx-auto max-w-6xl">
+          {/* Terminal badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6 inline-flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900/50 px-3 py-1.5 text-xs font-mono text-zinc-400"
+          >
+            <Terminal className="h-3 w-3 text-amber-400/70" />
+            {profile.badge}
+          </motion.div>
+
           <div className="grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr]">
             {/* Left — Content */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
             >
-              {/* Terminal badge */}
-              <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-zinc-800 bg-zinc-900/50 px-3 py-1.5 text-xs font-mono text-zinc-400">
-                <Terminal className="h-3 w-3 text-amber-400/70" />
-                {profile.badge}
-              </div>
 
               {/* Heading */}
               <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
