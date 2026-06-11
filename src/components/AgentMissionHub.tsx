@@ -146,30 +146,8 @@ export default function Hero() {
       {/* ── Hero Section ── */}
       <section className="px-4 pt-28 pb-16">
         <div className="mx-auto max-w-6xl">
-          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
-            {/* Left — Profile Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="hidden lg:flex justify-center"
-            >
-              <div className="relative">
-                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/10 via-transparent to-zinc-600/10 blur-2xl" />
-                <div className="relative">
-                  <Image
-                    src="/images/profile.png"
-                    alt="Akshit Singh"
-                    width={420}
-                    height={420}
-                    className="object-contain"
-                    priority
-                  />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Right — Content */}
+          <div className="grid items-start gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+            {/* Left — Content */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -250,33 +228,139 @@ export default function Hero() {
                 </a>
               </div>
             </motion.div>
+
+            {/* Right — Akshit Bot (comic-style chat) */}
+            <motion.div
+              initial={{ opacity: 0, y: 14 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.5 }}
+              className="hidden lg:block"
+            >
+              <div className="rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
+                {/* Bot header */}
+                <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800/40">
+                  <div className="relative">
+                    <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-amber-400/30">
+                      <Image
+                        src="/images/profile.png"
+                        alt="Akshit Bot"
+                        width={40}
+                        height={40}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-emerald-400 border-2 border-zinc-900" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-zinc-100">Akshit Bot</p>
+                    <p className="text-xs text-emerald-400/80">Online • Ask me anything</p>
+                  </div>
+                  <Bot className="ml-auto h-5 w-5 text-amber-400/40" />
+                </div>
+
+                {/* Chat area */}
+                <div className="space-y-4 min-h-[200px] max-h-[320px] overflow-y-auto mb-4">
+                  {/* Default greeting or answer — speech bubble from Akshit */}
+                  <div className="flex items-start gap-3">
+                    <div className="shrink-0 h-7 w-7 rounded-full overflow-hidden border border-zinc-700">
+                      <Image
+                        src="/images/profile.png"
+                        alt="Akshit"
+                        width={28}
+                        height={28}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="relative max-w-[85%]">
+                      {/* Speech bubble tail */}
+                      <div className="absolute -left-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-zinc-800/80" />
+                      <motion.div
+                        key={answer || 'greeting'}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-4 py-3"
+                      >
+                        {isAnswering ? (
+                          <div className="flex items-center gap-2">
+                            <div className="flex gap-1">
+                              <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                              <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                              <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="text-sm leading-6 text-zinc-300">
+                            {answer || "Hey! 👋 I'm Akshit's AI assistant. Ask me about his skills, projects, experience, or why you should hire him!"}
+                          </p>
+                        )}
+                      </motion.div>
+                    </div>
+                  </div>
+
+                  {/* User's question — speech bubble from user (right-aligned) */}
+                  {question && answer && (
+                    <motion.div
+                      initial={{ opacity: 0, x: 10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="flex justify-end"
+                    >
+                      <div className="relative max-w-[80%]">
+                        <div className="absolute -right-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[8px] border-l-amber-400/20" />
+                        <div className="rounded-2xl rounded-tr-sm bg-amber-400/10 border border-amber-400/20 px-4 py-3">
+                          <p className="text-sm text-zinc-200">{question}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
+                </div>
+
+                {/* Input — comic-style typing area */}
+                <form onSubmit={handleSubmit} className="relative">
+                  <div className="flex items-center gap-2 rounded-xl border border-zinc-700/50 bg-zinc-800/40 px-4 py-2.5 transition focus-within:border-amber-400/30">
+                    <input
+                      ref={inputRef}
+                      value={question}
+                      onChange={(e) => setQuestion(e.target.value)}
+                      placeholder={typedPlaceholder + '|'}
+                      className="min-w-0 flex-1 bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
+                    />
+                    {question && (
+                      <button
+                        type="button"
+                        onClick={handleClear}
+                        className="shrink-0 text-zinc-600 hover:text-zinc-400 transition"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    )}
+                    <button
+                      type="submit"
+                      className="shrink-0 rounded-lg bg-amber-400/15 p-2 text-amber-300 transition hover:bg-amber-400/25"
+                      aria-label="Ask"
+                    >
+                      <Send className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </motion.div>
           </div>
 
-          {/* ── Ask Me Anything Bar ── */}
+          {/* Mobile-only AMA bar */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="mt-14 max-w-2xl"
+            className="mt-10 lg:hidden"
           >
             <form onSubmit={handleSubmit} className="agent-search-bar flex items-center gap-3 px-5 py-3">
               <Search className="h-4 w-4 shrink-0 text-zinc-500" />
               <input
-                ref={inputRef}
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder={typedPlaceholder + '|'}
                 className="min-w-0 flex-1 bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
               />
-              {question && (
-                <button
-                  type="button"
-                  onClick={handleClear}
-                  className="shrink-0 text-zinc-600 hover:text-zinc-400 transition"
-                >
-                  <X className="h-4 w-4" />
-                </button>
-              )}
               <button
                 type="submit"
                 className="shrink-0 rounded-full bg-amber-400/10 p-2 text-amber-300 transition hover:bg-amber-400/20"
@@ -285,8 +369,6 @@ export default function Hero() {
                 <Send className="h-3.5 w-3.5" />
               </button>
             </form>
-
-            {/* Answer display */}
             {(answer || isAnswering) && (
               <motion.div
                 initial={{ opacity: 0, y: 6 }}
