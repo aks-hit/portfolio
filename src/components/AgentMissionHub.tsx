@@ -146,8 +146,30 @@ export default function Hero() {
       {/* ── Hero Section ── */}
       <section className="px-4 pt-28 pb-16">
         <div className="mx-auto max-w-6xl">
-          <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr]">
-            {/* Left — Content */}
+          <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+            {/* Left — Profile Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="hidden lg:flex justify-center"
+            >
+              <div className="relative">
+                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/10 via-transparent to-zinc-600/10 blur-2xl" />
+                <div className="relative">
+                  <Image
+                    src="/images/profile.png"
+                    alt="Akshit Singh"
+                    width={420}
+                    height={420}
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Right — Content */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
@@ -226,28 +248,6 @@ export default function Hero() {
                 >
                   <Github className="h-4 w-4" />
                 </a>
-              </div>
-            </motion.div>
-
-            {/* Right — Profile Image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.5 }}
-              className="hidden lg:flex justify-center"
-            >
-              <div className="relative">
-                <div className="absolute -inset-4 rounded-full bg-gradient-to-br from-amber-400/10 via-transparent to-zinc-600/10 blur-2xl" />
-                <div className="relative">
-                  <Image
-                    src="/images/profile.png"
-                    alt="Akshit Singh"
-                    width={420}
-                    height={420}
-                    className="object-contain"
-                    priority
-                  />
-                </div>
               </div>
             </motion.div>
           </div>
