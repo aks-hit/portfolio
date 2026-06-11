@@ -258,9 +258,9 @@ export default function Hero() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="hidden lg:flex"
             >
-              <div className="flex flex-col w-full rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
+              <div className="flex flex-col h-full w-full rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
                 {/* Bot header */}
-                <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800/40">
+                <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800/40 shrink-0">
                   <div className="relative">
                     <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-amber-400/30">
                       <Image
@@ -281,7 +281,7 @@ export default function Hero() {
                 </div>
 
                 {/* Chat area — scrollable, grows to fill */}
-                <div ref={chatRef} className="flex-1 space-y-4 overflow-y-auto mb-4 pr-1" style={{ maxHeight: '400px' }}>
+                <div ref={chatRef} className="flex-1 space-y-4 overflow-y-auto mb-4 pr-1 min-h-[300px]">
                   {messages.map((msg, i) => (
                     msg.role === 'bot' ? (
                       /* Bot message — left aligned with avatar */
