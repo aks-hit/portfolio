@@ -234,6 +234,23 @@ export const profile = {
       "gradient": "from-cyan-500 to-blue-600"
     },
     {
+      "id": "autonomous-outreach-agent",
+      "title": "Autonomous Outreach Agent",
+      "description": "Built a fully autonomous cold outreach pipeline powered by Google Gemini that runs 24/7 — scores leads, drafts hyper-personalized emails, sends follow-ups, auto-applies to LinkedIn jobs via Playwright, and syncs everything to a Google Sheets CRM.",
+      "highlights": "Features waterfall API contact discovery (Apollo → Snov → Hunter), Gmail API integration with bounce detection and deduplication, LinkedIn auto-apply via headless Playwright, and zero-maintenance Windows Task Scheduler deployment. Designed for cloud deployment on PythonAnywhere with hardened security.",
+      "tech": [
+        "Google Gemini",
+        "Playwright",
+        "Gmail API",
+        "Google Sheets API",
+        "Python",
+        "Agentic AI",
+        "LinkedIn Scraping"
+      ],
+      "link": "https://github.com/aks-hit/outreach_agent",
+      "gradient": "from-violet-500 to-purple-600"
+    },
+    {
       "id": "sign-language-recognition",
       "title": "Real-Time Sign Language Recognition System",
       "description": "Trained a CNN-based ASL recognition model using MediaPipe and OpenCV for 30+ gestures.",

@@ -123,24 +123,52 @@ body.light .text-slate-100 { color: #27272a; }
 
 /* ── Light theme border overrides ── */
 body.light .border-zinc-800,
-body.light .border-zinc-800\/80 { border-color: #e4e4e7; }
-body.light .border-zinc-700 { border-color: #d4d4d8; }
+body.light .border-zinc-800\/80,
+body.light .border-zinc-800\/60 { border-color: #e4e4e7; }
+body.light .border-zinc-700,
+body.light .border-zinc-700\/60 { border-color: #d4d4d8; }
 body.light .border-slate-800 { border-color: #e4e4e7; }
 body.light .border-slate-700 { border-color: #d4d4d8; }
+body.light .border-transparent { border-color: transparent; }
 
 /* ── Light theme background overrides ── */
 body.light .bg-zinc-900,
-body.light .bg-zinc-900\/50 { background-color: rgba(255, 255, 255, 0.7); }
+body.light .bg-zinc-900\/50,
+body.light .bg-zinc-900\/30,
+body.light .bg-zinc-900\/40 { background-color: rgba(255, 255, 255, 0.75); }
 body.light .bg-zinc-950 { background-color: #fafaf9; }
+body.light .bg-zinc-800\/40,
+body.light .bg-zinc-800\/50 { background-color: rgba(244, 244, 245, 0.8); }
+body.light .bg-zinc-100 { background-color: #18181b; }
 body.light .bg-slate-950\/70,
 body.light .bg-slate-950\/75,
 body.light .bg-slate-950\/80,
 body.light .bg-slate-950\/90,
 body.light .bg-slate-950\/95,
 body.light .bg-slate-900\/70,
-body.light .bg-slate-900\/80 { background-color: rgba(255, 255, 255, 0.8); }
+body.light .bg-slate-900\/80 { background-color: rgba(255, 255, 255, 0.85); }
 body.light .bg-slate-950 { background-color: #fafaf9; }
 body.light .bg-slate-900 { background-color: #ffffff; }
+
+/* ── Light theme nav/footer ── */
+body.light .bg-\[#09090b\]\/90 { background-color: rgba(250, 250, 249, 0.92); }
+body.light .bg-\[#0f0f12\]\/95 { background-color: rgba(255, 255, 255, 0.95); }
+body.light .bg-black\/60 { background-color: rgba(0, 0, 0, 0.3); }
+
+/* ── Light theme amber accents ── */
+body.light .text-amber-300,
+body.light .text-amber-300\/80 { color: #b45309; }
+body.light .text-amber-400\/70,
+body.light .text-amber-400\/60,
+body.light .text-amber-400\/50 { color: #d97706; }
+body.light .bg-amber-400\/10,
+body.light .bg-amber-400\/15,
+body.light .bg-amber-400\/20 { background-color: rgba(217, 119, 6, 0.1); }
+body.light .border-amber-400\/20 { border-color: rgba(217, 119, 6, 0.2); }
+
+/* ── Light theme misc ── */
+body.light .shadow-black\/20 { --tw-shadow-color: rgba(0, 0, 0, 0.08); }
+body.light .bg-transparent { background-color: transparent; }
 
 /* ── Scrollbar (subtle) ── */
 ::-webkit-scrollbar {
