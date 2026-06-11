@@ -146,7 +146,7 @@ export default function Hero() {
       const data = await res.json();
       setMessages(prev => [...prev, { role: 'bot', text: data.answer || data.error || 'Something went wrong.' }]);
     } catch {
-      setMessages(prev => [...prev, { role: 'bot', text: getAnswer(trimmed) }]);
+      setMessages(prev => [...prev, { role: 'bot', text: "Sorry, I'm having trouble connecting right now. Please try again later." }]);
     } finally {
       setIsAnswering(false);
     }
