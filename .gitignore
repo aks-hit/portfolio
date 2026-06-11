@@ -47,3 +47,7 @@ generate_agent_md.py
 *.zip
 .vercel
 .env*
+
+# source images
+WhatsApp*
+public/images/original.*
