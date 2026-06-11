@@ -27,28 +27,27 @@ npm run build
 
 `npm run sync:profile` regenerates `src/data/profile.ts`, and the site imports that generated profile everywhere.
 
-LinkedIn does not provide a simple public API for automatic profile scraping. The reliable workflow is to mirror LinkedIn changes into `content/linkedin.json`, or replace that file from a LinkedIn data export before CI runs. The GitHub Action is scheduled daily and also runs on every push.
+LinkedIn does not provide a simple public API for automatic profile scraping. The reliable workflow is to mirror LinkedIn changes into `content/linkedin.json`, or replace that file from a LinkedIn data export before CI runs. Vercel redeploys when changes are pushed to `main`.
 
 ## CI/CD
 
-The workflow at `.github/workflows/portfolio-sync-deploy.yml`:
+The workflow at `.github/workflows/portfolio-sync-deploy.yml` validates the portfolio before Vercel deploys from `main`:
 
 1. Installs dependencies with `npm ci`.
 2. Runs `npm run sync:profile`.
 3. Builds the static Next.js export.
-4. Uploads `out/` to GitHub Pages.
 
 It runs on:
 
 - Pushes to `main` that affect content, source, config, or workflow files.
+- Pull requests targeting `main`.
 - Manual `workflow_dispatch`.
-- A daily schedule at `03:30 UTC`.
 
-Enable GitHub Pages in the repository settings and select GitHub Actions as the Pages source.
+There is no daily schedule and no GitHub Pages deployment step. That prevents the daily failure email from GitHub Pages while keeping a build check before Vercel deploys the connected `main` branch.
 
 ## Interactive Agents
 
-The homepage agents run in local static mode with curated responses based on the resume content. This avoids exposing a Gemini/OpenAI key in browser JavaScript, which would be unsafe for a static GitHub Pages deployment.
+The homepage agents run in local static mode with curated responses based on the resume content. This avoids exposing a Gemini/OpenAI key in browser JavaScript, which would be unsafe for a public static deployment.
 
 To make the agents fully LLM-backed later, add a serverless backend route or edge function that stores the Gemini/OpenAI key server-side, then call that endpoint from `src/components/AgentMissionHub.tsx`.
 
@@ -68,4 +67,4 @@ npm run start
 - Tailwind CSS
 - Framer Motion
 - Lucide React
-- GitHub Actions and GitHub Pages
+- GitHub Actions and Vercel

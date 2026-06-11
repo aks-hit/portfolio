@@ -28,6 +28,32 @@ body.light {
   @apply bg-gray-50 text-gray-900;
 }
 
+.site-backdrop {
+  background: #020617;
+}
+
+.theme-wash {
+  background: linear-gradient(
+    135deg,
+    rgba(8, 47, 73, 0.7),
+    rgba(15, 23, 42, 0.86) 48%,
+    rgba(20, 83, 45, 0.5)
+  );
+}
+
+body.light .site-backdrop {
+  background: #f8fafc;
+}
+
+body.light .theme-wash {
+  background: linear-gradient(
+    135deg,
+    rgba(224, 242, 254, 0.82),
+    rgba(255, 255, 255, 0.92) 48%,
+    rgba(220, 252, 231, 0.78)
+  );
+}
+
 .glass-effect {
   background: rgba(15, 23, 42, 0.7);
   backdrop-filter: blur(10px);
@@ -57,6 +83,15 @@ body.light .glass-effect {
   background-size: 44px 44px, 44px 44px, 100% 100%, 100% 100%, 100% 100%;
 }
 
+body.light .neural-grid {
+  background-image:
+    linear-gradient(rgba(51, 65, 85, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(51, 65, 85, 0.12) 1px, transparent 1px),
+    radial-gradient(circle at 18% 22%, rgba(8, 145, 178, 0.16), transparent 24%),
+    radial-gradient(circle at 82% 18%, rgba(5, 150, 105, 0.13), transparent 24%),
+    radial-gradient(circle at 58% 86%, rgba(217, 119, 6, 0.11), transparent 28%);
+}
+
 .agent-console {
   position: relative;
 }
@@ -71,6 +106,15 @@ body.light .glass-effect {
     rgba(255, 255, 255, 0.06),
     transparent 22%,
     rgba(34, 211, 238, 0.06)
+  );
+}
+
+body.light .agent-console::before {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.72),
+    transparent 25%,
+    rgba(8, 145, 178, 0.08)
   );
 }
 
@@ -109,6 +153,10 @@ body.light .text-slate-400 {
   @apply text-gray-600;
 }
 
+body.light .text-slate-500 {
+  @apply text-gray-500;
+}
+
 body.light .text-white {
   @apply text-gray-900;
 }
@@ -126,6 +174,11 @@ body.light .border-slate-700 {
   @apply border-gray-300;
 }
 
+body.light .border-slate-700\/80,
+body.light .border-slate-800\/80 {
+  border-color: rgba(203, 213, 225, 0.9);
+}
+
 /* Background colors for light theme */
 body.light .bg-slate-900 {
   @apply bg-white;
@@ -141,6 +194,29 @@ body.light .bg-slate-950 {
 
 body.light .bg-slate-800\/50 {
   @apply bg-gray-100;
+}
+
+body.light .bg-slate-950\/70,
+body.light .bg-slate-950\/75,
+body.light .bg-slate-950\/80,
+body.light .bg-slate-950\/90,
+body.light .bg-slate-950\/95 {
+  background-color: rgba(255, 255, 255, 0.86);
+}
+
+body.light .bg-slate-900\/70,
+body.light .bg-slate-900\/80 {
+  background-color: rgba(248, 250, 252, 0.9);
+}
+
+body.light .bg-slate-800\/50 {
+  background-color: rgba(241, 245, 249, 0.9);
+}
+
+body.light .shadow-cyan-950\/30,
+body.light .shadow-cyan-950\/50,
+body.light .shadow-slate-950\/50 {
+  --tw-shadow-color: rgba(8, 145, 178, 0.14);
 }
 
 /* Custom Scrollbar - Dark */

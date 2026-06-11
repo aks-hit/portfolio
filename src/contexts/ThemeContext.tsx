@@ -32,7 +32,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.body.classList.toggle('light', newTheme === 'light');
   };
 
-  // 🚨 CRITICAL: Do not render children before provider exists
+  // Avoid hydration mismatch while the saved theme is loaded.
   if (!mounted) {
     return null;
   }

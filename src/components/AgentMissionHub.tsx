@@ -61,7 +61,7 @@ const agentRoster = [
     accent: 'amber',
     prompt: 'Ask about CI/CD, static deployment, GitHub Actions, MLOps, or portfolio sync.',
     reply:
-      'This portfolio now runs through a content sync pipeline: resume and LinkedIn JSON generate typed profile data, the Next.js build exports a static site, and GitHub Actions can deploy it to Pages. For AI projects, the same story appears in GitHub Actions, CML, Docker, Hugging Face, MLOps, and evaluation pipelines.',
+      'This portfolio now runs through a content sync pipeline: resume and LinkedIn JSON generate typed profile data, GitHub Actions validates the build, and Vercel deploys the production version from main. For AI projects, the same story appears in GitHub Actions, CML, Docker, Hugging Face, MLOps, and evaluation pipelines.',
     stats: ['GitHub Actions', 'Static export', 'Content sync'],
     suggestions: ['How does portfolio CI/CD work?', 'What should I update first?', 'How is this ATS-friendly?'],
   },
@@ -132,7 +132,7 @@ function getAgentAnswer(agentId: AgentId, question: string) {
   }
 
   if (lowerQuestion.includes('ci') || lowerQuestion.includes('deploy') || lowerQuestion.includes('update')) {
-    return 'The CI/CD loop is already wired: edit content/resume.json or content/linkedin.json, run the sync script, build the static export, and GitHub Actions can deploy the result to GitHub Pages. It keeps resume, LinkedIn-style highlights, projects, skills, and job changes flowing into the portfolio.';
+    return 'The CI/CD loop is Vercel-friendly now: edit content/resume.json or content/linkedin.json, run the sync script, build the static export, and push main. GitHub Actions validates the build without scheduled Pages deployment, then Vercel redeploys from main.';
   }
 
   if (lowerQuestion.includes('pitch') || lowerQuestion.includes('hire') || lowerQuestion.includes('summary')) {
@@ -201,9 +201,9 @@ export default function AgentMissionHub() {
 
   return (
     <div className="relative overflow-hidden">
-      <div className="fixed inset-0 -z-10 bg-slate-950">
+      <div className="site-backdrop fixed inset-0 -z-10">
         <div className="absolute inset-0 neural-grid opacity-70" />
-        <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(8,47,73,0.7),rgba(15,23,42,0.86)_48%,rgba(20,83,45,0.5))]" />
+        <div className="theme-wash absolute inset-0" />
       </div>
 
       <section className="px-4 pt-24 pb-14">
@@ -499,7 +499,7 @@ export default function AgentMissionHub() {
               {[
                 ['1', 'Edit resume or LinkedIn JSON'],
                 ['2', 'Generator refreshes portfolio data'],
-                ['3', 'CI builds and deploys the site'],
+                ['3', 'Vercel deploys from main'],
               ].map(([step, text]) => (
                 <div key={step} className="rounded-lg border border-slate-800 bg-slate-900/70 p-4">
                   <p className="mb-3 flex h-8 w-8 items-center justify-center rounded-lg bg-amber-300 text-sm font-black text-slate-950">

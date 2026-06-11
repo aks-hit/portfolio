@@ -175,7 +175,7 @@ export const profile = {
   "experiences": [
     {
       "id": "relay-human-cloud-junior-software-developer",
-      "role": "Junior Software Developer",
+      "role": "AI Engineer",
       "company": "Relay Human Cloud",
       "period": "January 2026 - Present",
       "points": [
