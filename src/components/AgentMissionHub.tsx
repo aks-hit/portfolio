@@ -163,11 +163,13 @@ export default function Hero() {
     inputRef.current?.focus();
   }
 
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
   return (
     <div className="relative">
-      {/* ── Hero Section ── */}
+      {/* ── Hero Section — Centered, Compact ── */}
       <section className="px-4 pt-28 pb-16">
-        <div className="mx-auto max-w-6xl">
+        <div className="mx-auto max-w-4xl text-center">
           {/* Terminal badge */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
@@ -179,254 +181,74 @@ export default function Hero() {
             {profile.badge}
           </motion.div>
 
-          <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
-            {/* Left — Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-            >
-              {/* Heading */}
-              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
-                {profile.name}
-              </h1>
-              <p className="mt-3 text-lg text-amber-300/80 font-medium sm:text-xl">
-                {latestExperience.role} @ {latestExperience.company}
-              </p>
-              <p className="mt-1 text-sm text-zinc-500 font-mono">{latestExperience.period}</p>
+          {/* Heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+              {profile.name}
+            </h1>
+            <p className="mt-3 text-lg text-amber-300/80 font-medium sm:text-xl">
+              {latestExperience.role} @ {latestExperience.company}
+            </p>
+            <p className="mt-1 text-sm text-zinc-500 font-mono">{latestExperience.period}</p>
+          </motion.div>
 
-              <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400">
-                {profile.summary}
-              </p>
+          {/* Summary */}
+          <motion.p
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="mx-auto mt-6 max-w-2xl text-base leading-7 text-zinc-400"
+          >
+            {profile.summary}
+          </motion.p>
 
-              {/* Current role highlights */}
-              <ul className="mt-5 space-y-2.5">
-                {latestExperience.points.map((point, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ opacity: 0, x: -8 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.3 + i * 0.08 }}
-                    className="flex items-start gap-2.5 text-sm leading-6 text-zinc-400"
-                  >
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-amber-400/50" />
-                    <span>{point}</span>
-                  </motion.li>
-                ))}
-              </ul>
-
-              {/* CTAs */}
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <MagneticButton>
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="inline-flex items-center gap-2 rounded-md bg-zinc-100 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-white"
-                  >
-                    <Mail className="h-4 w-4" />
-                    Get in touch
-                  </a>
-                </MagneticButton>
-                <MagneticButton>
-                  <Link
-                    href="/projects"
-                    className="inline-flex items-center gap-2 rounded-md border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition hover:border-zinc-500 hover:text-zinc-100"
-                  >
-                    <Code2 className="h-4 w-4" />
-                    View work
-                  </Link>
-                </MagneticButton>
-                <a
-                  href={profile.links.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-800 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
-                  aria-label="LinkedIn"
-                >
-                  <Linkedin className="h-4 w-4" />
-                </a>
-                <a
-                  href={profile.links.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-800 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
-                  aria-label="GitHub"
-                >
-                  <Github className="h-4 w-4" />
-                </a>
-              </div>
-            </motion.div>
-
-            {/* Right — Akshit Bot (sticky, compact) */}
-            <motion.div
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-              className="hidden lg:block"
-            >
-              <div className="sticky top-28 flex flex-col rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
-                {/* Bot header */}
-                <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800/40 shrink-0">
-                  <div className="relative">
-                    <div className="h-10 w-10 rounded-full overflow-hidden border-2 border-amber-400/30">
-                      <Image
-                        src="/images/profile.png"
-                        alt="Akshit Bot"
-                        width={40}
-                        height={40}
-                        className="object-cover"
-                      />
-                    </div>
-                    <div className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full bg-emerald-400 border-2 border-zinc-900" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-zinc-100">Akshit Bot</p>
-                    <p className="text-xs text-emerald-400/80">Online • Ask me anything</p>
-                  </div>
-                  <Bot className="ml-auto h-5 w-5 text-amber-400/40" />
-                </div>
-
-                {/* Chat area — compact, scrollable */}
-                <div ref={chatRef} className="space-y-4 overflow-y-auto mb-4 pr-1 max-h-[340px]">
-                  {messages.map((msg, i) => (
-                    msg.role === 'bot' ? (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="flex items-start gap-3"
-                      >
-                        <div className="shrink-0 h-7 w-7 rounded-full overflow-hidden border border-zinc-700">
-                          <Image src="/images/profile.png" alt="Akshit" width={28} height={28} className="object-cover" />
-                        </div>
-                        <div className="relative max-w-[85%]">
-                          <div className="absolute -left-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-r-[8px] border-r-zinc-800/80" />
-                          <div className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-4 py-3">
-                            <p className="text-sm leading-6 text-zinc-300">{msg.text}</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ) : (
-                      <motion.div
-                        key={i}
-                        initial={{ opacity: 0, x: 10 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex justify-end"
-                      >
-                        <div className="relative max-w-[80%]">
-                          <div className="absolute -right-2 top-3 w-0 h-0 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent border-l-[8px] border-l-amber-400/20" />
-                          <div className="rounded-2xl rounded-tr-sm bg-amber-400/10 border border-amber-400/20 px-4 py-3">
-                            <p className="text-sm text-zinc-200">{msg.text}</p>
-                          </div>
-                        </div>
-                      </motion.div>
-                    )
-                  ))}
-
-                  {/* Typing indicator */}
-                  {isAnswering && (
-                    <div className="flex items-start gap-3">
-                      <div className="shrink-0 h-7 w-7 rounded-full overflow-hidden border border-zinc-700">
-                        <Image src="/images/profile.png" alt="Akshit" width={28} height={28} className="object-cover" />
-                      </div>
-                      <div className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-4 py-3">
-                        <div className="flex gap-1">
-                          <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '0ms' }} />
-                          <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '150ms' }} />
-                          <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '300ms' }} />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Input */}
-                <form onSubmit={handleSubmit}>
-                  <div className="flex items-center gap-2 rounded-xl border border-zinc-700/50 bg-zinc-800/40 px-4 py-2.5 transition focus-within:border-amber-400/30">
-                    <input
-                      ref={inputRef}
-                      value={question}
-                      onChange={(e) => setQuestion(e.target.value)}
-                      placeholder={typedPlaceholder + '|'}
-                      className="min-w-0 flex-1 bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
-                    />
-                    {question && (
-                      <button
-                        type="button"
-                        onClick={handleClear}
-                        className="shrink-0 text-zinc-600 hover:text-zinc-400 transition"
-                      >
-                        <X className="h-3.5 w-3.5" />
-                      </button>
-                    )}
-                    <button
-                      type="submit"
-                      className="shrink-0 rounded-lg bg-amber-400/15 p-2 text-amber-300 transition hover:bg-amber-400/25"
-                      aria-label="Ask"
-                    >
-                      <Send className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                </form>
-
-                {/* Suggested questions */}
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {['Skills?', 'Experience?', 'Projects?', 'Why hire?'].map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => { setQuestion(''); handleAsk(q); }}
-                      className="rounded-full border border-zinc-700/50 bg-zinc-800/30 px-3 py-1 text-xs text-zinc-500 transition hover:border-amber-400/30 hover:text-zinc-300"
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Mobile-only AMA bar */}
+          {/* CTAs */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-            className="mt-10 lg:hidden"
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
           >
-            <form onSubmit={handleSubmit} className="agent-search-bar flex items-center gap-3 px-5 py-3">
-              <Search className="h-4 w-4 shrink-0 text-zinc-500" />
-              <input
-                value={question}
-                onChange={(e) => setQuestion(e.target.value)}
-                placeholder={typedPlaceholder + '|'}
-                className="min-w-0 flex-1 bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
-              />
-              <button
-                type="submit"
-                className="shrink-0 rounded-full bg-amber-400/10 p-2 text-amber-300 transition hover:bg-amber-400/20"
-                aria-label="Ask"
+            <MagneticButton>
+              <a
+                href={`mailto:${profile.email}`}
+                className="inline-flex items-center gap-2 rounded-md bg-zinc-100 px-5 py-2.5 text-sm font-semibold text-zinc-900 transition hover:bg-white"
               >
-                <Send className="h-3.5 w-3.5" />
-              </button>
-            </form>
-            {(messages.length > 1 || isAnswering) && (
-              <motion.div
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="mt-3 rounded-xl border border-zinc-800/60 bg-zinc-900/40 backdrop-blur-sm px-5 py-4"
+                <Mail className="h-4 w-4" />
+                Get in touch
+              </a>
+            </MagneticButton>
+            <MagneticButton>
+              <Link
+                href="/projects"
+                className="inline-flex items-center gap-2 rounded-md border border-zinc-700 px-5 py-2.5 text-sm font-semibold text-zinc-300 transition hover:border-zinc-500 hover:text-zinc-100"
               >
-                {isAnswering ? (
-                  <div className="flex items-center gap-2 text-sm text-zinc-500">
-                    <Sparkles className="h-3.5 w-3.5 animate-pulse text-amber-400/60" />
-                    Thinking...
-                  </div>
-                ) : (
-                  <div className="flex gap-3">
-                    <MessageSquare className="mt-0.5 h-4 w-4 shrink-0 text-amber-400/50" />
-                    <p className="text-sm leading-6 text-zinc-300">{messages[messages.length - 1]?.text}</p>
-                  </div>
-                )}
-              </motion.div>
-            )}
+                <Code2 className="h-4 w-4" />
+                View work
+              </Link>
+            </MagneticButton>
+            <a
+              href={profile.links.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-800 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="h-4 w-4" />
+            </a>
+            <a
+              href={profile.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-zinc-800 text-zinc-500 transition hover:border-zinc-600 hover:text-zinc-300"
+              aria-label="GitHub"
+            >
+              <Github className="h-4 w-4" />
+            </a>
           </motion.div>
         </div>
       </section>
@@ -557,6 +379,144 @@ export default function Hero() {
           </Link>
         </div>
       </section>
+
+      {/* ── Floating Chatbot Widget (Bottom-Right) ── */}
+
+      {/* Chat panel overlay */}
+      {isChatOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 20, scale: 0.95 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+          className="fixed bottom-24 right-6 z-50 w-[380px] max-h-[520px] flex flex-col rounded-2xl border border-zinc-800/60 bg-zinc-900/95 backdrop-blur-xl shadow-2xl shadow-black/40"
+        >
+          {/* Bot header */}
+          <div className="flex items-center gap-3 p-4 pb-3 border-b border-zinc-800/40 shrink-0">
+            <div className="relative">
+              <div className="h-9 w-9 rounded-full overflow-hidden border-2 border-amber-400/30">
+                <Image src="/images/profile.png" alt="Akshit Bot" width={36} height={36} className="object-cover" />
+              </div>
+              <div className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full bg-emerald-400 border-2 border-zinc-900" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-zinc-100">Akshit Bot</p>
+              <p className="text-xs text-emerald-400/80">Online • Ask me anything</p>
+            </div>
+            <button
+              onClick={() => setIsChatOpen(false)}
+              className="rounded-lg p-1.5 text-zinc-500 transition hover:bg-zinc-800 hover:text-zinc-300"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          {/* Chat messages */}
+          <div ref={chatRef} className="flex-1 overflow-y-auto p-4 space-y-4 max-h-[340px]">
+            {messages.map((msg, i) => (
+              msg.role === 'bot' ? (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-start gap-2.5"
+                >
+                  <div className="shrink-0 h-6 w-6 rounded-full overflow-hidden border border-zinc-700">
+                    <Image src="/images/profile.png" alt="Akshit" width={24} height={24} className="object-cover" />
+                  </div>
+                  <div className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-3.5 py-2.5 max-w-[85%]">
+                    <p className="text-sm leading-6 text-zinc-300">{msg.text}</p>
+                  </div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  className="flex justify-end"
+                >
+                  <div className="rounded-2xl rounded-tr-sm bg-amber-400/10 border border-amber-400/20 px-3.5 py-2.5 max-w-[80%]">
+                    <p className="text-sm text-zinc-200">{msg.text}</p>
+                  </div>
+                </motion.div>
+              )
+            ))}
+
+            {isAnswering && (
+              <div className="flex items-start gap-2.5">
+                <div className="shrink-0 h-6 w-6 rounded-full overflow-hidden border border-zinc-700">
+                  <Image src="/images/profile.png" alt="Akshit" width={24} height={24} className="object-cover" />
+                </div>
+                <div className="rounded-2xl rounded-tl-sm bg-zinc-800/80 border border-zinc-700/40 px-3.5 py-2.5">
+                  <div className="flex gap-1">
+                    <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="h-2 w-2 rounded-full bg-zinc-500 animate-bounce" style={{ animationDelay: '300ms' }} />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Suggested quick replies */}
+          {messages.length <= 1 && (
+            <div className="px-4 pb-2 flex flex-wrap gap-1.5">
+              {['Skills?', 'Experience?', 'Projects?', 'Why hire?'].map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => { setQuestion(''); handleAsk(q); }}
+                  className="rounded-full border border-zinc-700/50 bg-zinc-800/30 px-3 py-1 text-xs text-zinc-500 transition hover:border-amber-400/30 hover:text-zinc-300"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Input */}
+          <form onSubmit={handleSubmit} className="p-4 pt-2 border-t border-zinc-800/40 shrink-0">
+            <div className="flex items-center gap-2 rounded-xl border border-zinc-700/50 bg-zinc-800/40 px-3.5 py-2.5 transition focus-within:border-amber-400/30">
+              <input
+                ref={inputRef}
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+                placeholder={typedPlaceholder + '|'}
+                className="min-w-0 flex-1 bg-transparent text-sm text-zinc-200 outline-none placeholder:text-zinc-600"
+              />
+              {question && (
+                <button type="button" onClick={handleClear} className="shrink-0 text-zinc-600 hover:text-zinc-400 transition">
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )}
+              <button
+                type="submit"
+                className="shrink-0 rounded-lg bg-amber-400/15 p-2 text-amber-300 transition hover:bg-amber-400/25"
+                aria-label="Ask"
+              >
+                <Send className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </form>
+        </motion.div>
+      )}
+
+      {/* Floating button */}
+      <motion.button
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 1 }}
+        onClick={() => setIsChatOpen(!isChatOpen)}
+        className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-amber-400 to-amber-500 text-zinc-900 shadow-lg shadow-amber-400/20 transition-transform hover:scale-110 active:scale-95"
+        aria-label="Chat with Akshit Bot"
+      >
+        {isChatOpen ? (
+          <X className="h-6 w-6" />
+        ) : (
+          <MessageSquare className="h-6 w-6" />
+        )}
+      </motion.button>
     </div>
   );
 }
+
