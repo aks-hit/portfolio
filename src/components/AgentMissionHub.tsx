@@ -163,7 +163,7 @@ export default function Hero() {
     inputRef.current?.focus();
   }
 
-  const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(true);
 
   return (
     <div className="relative">
