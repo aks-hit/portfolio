@@ -164,7 +164,7 @@ export default function Hero() {
   }
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative">
       {/* ── Hero Section ── */}
       <section className="px-4 pt-28 pb-16">
         <div className="mx-auto max-w-6xl">
@@ -179,30 +179,23 @@ export default function Hero() {
             {profile.badge}
           </motion.div>
 
-          {/* Heading Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 18 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="mb-8"
-          >
-            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
-              {profile.name}
-            </h1>
-            <p className="mt-3 text-lg text-amber-300/80 font-medium sm:text-xl">
-              {latestExperience.role} @ {latestExperience.company}
-            </p>
-            <p className="mt-1 text-sm text-zinc-500 font-mono">{latestExperience.period}</p>
-          </motion.div>
-
-          <div className="grid items-stretch gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
             {/* Left — Content */}
             <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <p className="max-w-2xl text-base leading-7 text-zinc-400">
+              {/* Heading */}
+              <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-zinc-100 sm:text-5xl lg:text-6xl">
+                {profile.name}
+              </h1>
+              <p className="mt-3 text-lg text-amber-300/80 font-medium sm:text-xl">
+                {latestExperience.role} @ {latestExperience.company}
+              </p>
+              <p className="mt-1 text-sm text-zinc-500 font-mono">{latestExperience.period}</p>
+
+              <p className="mt-5 max-w-2xl text-base leading-7 text-zinc-400">
                 {profile.summary}
               </p>
 
@@ -263,14 +256,14 @@ export default function Hero() {
               </div>
             </motion.div>
 
-            {/* Right — Akshit Bot (comic-style chat) */}
+            {/* Right — Akshit Bot (sticky, compact) */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="hidden lg:flex"
+              className="hidden lg:block"
             >
-              <div className="flex flex-col h-full w-full rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
+              <div className="sticky top-28 flex flex-col rounded-2xl border border-zinc-800/60 bg-zinc-900/30 backdrop-blur-sm p-5">
                 {/* Bot header */}
                 <div className="flex items-center gap-3 mb-4 pb-3 border-b border-zinc-800/40 shrink-0">
                   <div className="relative">
@@ -292,11 +285,10 @@ export default function Hero() {
                   <Bot className="ml-auto h-5 w-5 text-amber-400/40" />
                 </div>
 
-                {/* Chat area — scrollable, grows to fill */}
-                <div ref={chatRef} className="flex-1 space-y-4 overflow-y-auto mb-4 pr-1 min-h-[300px]">
+                {/* Chat area — compact, scrollable */}
+                <div ref={chatRef} className="space-y-4 overflow-y-auto mb-4 pr-1 max-h-[340px]">
                   {messages.map((msg, i) => (
                     msg.role === 'bot' ? (
-                      /* Bot message — left aligned with avatar */
                       <motion.div
                         key={i}
                         initial={{ opacity: 0, scale: 0.95 }}
@@ -314,7 +306,6 @@ export default function Hero() {
                         </div>
                       </motion.div>
                     ) : (
-                      /* User message — right aligned */
                       <motion.div
                         key={i}
                         initial={{ opacity: 0, x: 10 }}
@@ -349,7 +340,7 @@ export default function Hero() {
                 </div>
 
                 {/* Input */}
-                <form onSubmit={handleSubmit} className="mt-auto">
+                <form onSubmit={handleSubmit}>
                   <div className="flex items-center gap-2 rounded-xl border border-zinc-700/50 bg-zinc-800/40 px-4 py-2.5 transition focus-within:border-amber-400/30">
                     <input
                       ref={inputRef}
@@ -376,6 +367,20 @@ export default function Hero() {
                     </button>
                   </div>
                 </form>
+
+                {/* Suggested questions */}
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {['Skills?', 'Experience?', 'Projects?', 'Why hire?'].map((q) => (
+                    <button
+                      key={q}
+                      type="button"
+                      onClick={() => { setQuestion(''); handleAsk(q); }}
+                      className="rounded-full border border-zinc-700/50 bg-zinc-800/30 px-3 py-1 text-xs text-zinc-500 transition hover:border-amber-400/30 hover:text-zinc-300"
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
               </div>
             </motion.div>
           </div>
