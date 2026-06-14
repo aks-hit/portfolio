@@ -13,6 +13,8 @@
 # production
 /build
 
+/eval
+
 # misc
 .DS_Store
 *.pem

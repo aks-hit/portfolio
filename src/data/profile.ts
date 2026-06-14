@@ -188,7 +188,7 @@ export const profile = {
       "color": "cyan"
     },
     {
-      "id": "yourallystack-ai-engineer-intern",
+      "id": "yourallystack-ai-developer-intern",
       "role": "AI Engineer Intern",
       "company": "YourAllyStack",
       "period": "September 2025 - January 2026",
@@ -202,9 +202,9 @@ export const profile = {
       "color": "violet"
     },
     {
-      "id": "iirm-deep-learning-research",
+      "id": "iitram-deep-learning-research",
       "role": "Deep Learning Research Intern",
-      "company": "Institute of Infrastructure Research And Management",
+      "company": "Institute of Infrastructure ,Technology, Research And Management",
       "period": "June 2024 - July 2024",
       "points": [
         "Researched ML/DL-based sleep stage classification using non-invasive PPG signals and achieved up to 86% accuracy.",
