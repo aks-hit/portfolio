@@ -31,12 +31,16 @@ export default function About() {
             viewport={{ once: true }}
             className="neon-card glass rounded-3xl p-7"
           >
-            <p className="text-base leading-7 text-zinc-200">{profile.summary}</p>
-            <p className="mt-5 text-base leading-7 text-zinc-400">
-              My work spans voice AI, LLM orchestration, computer vision, healthcare ML,
-              and MLOps. I focus on the practical layer — latency, reliability, clear
-              interfaces, and systems that feel useful from the first interaction.
-            </p>
+            <div className="space-y-4">
+              <p className="text-lg leading-8 text-zinc-200">
+                I take ambiguous problems from 0→1 and ship production systems fast. Cost and scale are my design constraints, not afterthoughts.
+              </p>
+              <p className="text-base leading-8 text-zinc-400">
+                My work spans voice AI, LLM orchestration, computer vision, healthcare ML,
+                and MLOps. I focus on the practical layer — latency, reliability, clear
+                interfaces, and systems that feel useful from the first interaction.
+              </p>
+            </div>
           </motion.div>
 
           <div className="grid gap-4">

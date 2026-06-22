@@ -594,20 +594,7 @@ export default function InteractiveBrain({
         </Suspense>
       </Canvas>
 
-      {/* HUD overlays */}
-      <div className="pointer-events-none absolute left-5 top-5 z-10 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-neon-cyan/85">
-        <span className="glow-dot" />
-        neural_core · scan online
-      </div>
-      <div className="pointer-events-none absolute right-5 top-5 z-10 font-mono text-[10px] uppercase tracking-[0.22em] text-neon-magenta/80">
-        v.2026.1 · drag to rotate · hover any lobe
-      </div>
-      <div className="pointer-events-none absolute inset-x-5 bottom-4 z-10 flex flex-wrap items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.18em] text-zinc-500">
-        <span>◢ frontal · parietal · temporal · occipital · cerebellum · brainstem</span>
-        <span className="text-neon-cyan/80">
-          {active ? `target → ${active.label.toLowerCase()}` : 'idle · auto-orbit'}
-        </span>
-      </div>
+      {/* HUD overlays removed */}
 
       {/* Animated CTA — invites exploration */}
       {showHint && !active && (

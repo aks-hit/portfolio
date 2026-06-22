@@ -78,7 +78,7 @@ export default function Hero() {
   const [isAnswering, setIsAnswering] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [lockedRegionId, setLockedRegionId] = useState<string | null>(null);
-  const [voiceEnabled, setVoiceEnabled] = useState(false);
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const chatRef = useRef<HTMLDivElement>(null);
@@ -146,9 +146,40 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.05 }}
             className="font-display mt-3 text-[clamp(2.6rem,7vw,5.6rem)] font-bold leading-[0.95] tracking-tight"
           >
-            <span className="block text-white/95">{profile.name.split(' ')[0]}</span>
-            <span className="block gradient-text">{profile.name.split(' ').slice(1).join(' ')}</span>
+            <span className="text-white/95">{profile.name.split(' ')[0]} </span>
+            <span className="gradient-text">{profile.name.split(' ').slice(1).join(' ')}</span>
           </motion.h1>
+
+          {/* Lobe pill index — pick a lobe to scan */}
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="mt-4 flex flex-wrap items-center gap-2 z-30"
+          >
+            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+              pick a lobe to scan ↓
+            </span>
+            {profile.brainRegions.map((r) => (
+              <button
+                key={r.id}
+                onClick={() => setLockedRegionId(r.id === lockedRegionId ? null : r.id)}
+                data-testid={`brain-region-tab-${r.id}`}
+                className={`rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] transition ${
+                  r.id === lockedRegionId
+                    ? 'border-white/30 text-white'
+                    : 'border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300'
+                }`}
+                style={
+                  r.id === lockedRegionId
+                    ? { color: r.color, borderColor: `${r.color}66` }
+                    : undefined
+                }
+              >
+                {r.label}
+              </button>
+            ))}
+          </motion.div>
         </div>
 
         {/* Brain — the hero element */}
@@ -282,36 +313,7 @@ export default function Hero() {
             </div>
           </motion.div>
 
-          {/* Lobe pill index — pick a lobe to scan */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="mt-8 flex flex-wrap items-center gap-2"
-          >
-            <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
-              pick a lobe to scan ↓
-            </span>
-            {profile.brainRegions.map((r) => (
-              <button
-                key={r.id}
-                onClick={() => setLockedRegionId(r.id === lockedRegionId ? null : r.id)}
-                data-testid={`brain-region-tab-${r.id}`}
-                className={`rounded-full border px-3 py-1 font-mono text-[10px] uppercase tracking-[0.18em] transition ${
-                  r.id === lockedRegionId
-                    ? 'border-white/30 text-white'
-                    : 'border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300'
-                }`}
-                style={
-                  r.id === lockedRegionId
-                    ? { color: r.color, borderColor: `${r.color}66` }
-                    : undefined
-                }
-              >
-                {r.label}
-              </button>
-            ))}
-          </motion.div>
+
 
           {/* Mobile region card */}
           <AnimatePresence mode="wait">
@@ -528,67 +530,6 @@ export default function Hero() {
             </div>
           </div>
         </motion.div>
-      </section>
-
-      {/* ══════════════════════════════════════════════════════════════
-            GITHUB STATS — free github-readme-stats widget (no auth needed)
-         ══════════════════════════════════════════════════════════════ */}
-      <section className="px-4 pb-24" data-testid="github-stats-section">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-8">
-            <p className="terminal-prefix font-mono text-[11px] uppercase tracking-[0.2em] text-zinc-400">
-              github.signal
-            </p>
-            <h2 className="font-display mt-3 text-4xl font-bold sm:text-5xl">
-              <span className="text-white">Code </span>
-              <span className="gradient-text">in motion</span>
-            </h2>
-          </div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="grid gap-5 lg:grid-cols-[1fr_1.3fr]"
-          >
-            <div className="neon-card glass overflow-hidden rounded-3xl p-3">
-              {/* GitHub stats card */}
-              <img
-                src="https://github-readme-stats.vercel.app/api?username=aks-hit&theme=transparent&hide_border=true&bg_color=00000000&title_color=22e4ff&icon_color=ff2bd6&text_color=cfd6ff&include_all_commits=true&count_private=true"
-                alt="GitHub stats for aks-hit"
-                loading="lazy"
-                className="w-full"
-                data-testid="github-stats-card"
-              />
-            </div>
-            <div className="neon-card glass overflow-hidden rounded-3xl p-3">
-              {/* Top languages */}
-              <img
-                src="https://github-readme-stats.vercel.app/api/top-langs/?username=aks-hit&layout=compact&theme=transparent&hide_border=true&bg_color=00000000&title_color=9d4edd&text_color=cfd6ff&langs_count=8"
-                alt="Top languages used by aks-hit"
-                loading="lazy"
-                className="w-full"
-                data-testid="github-langs-card"
-              />
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-5 neon-card glass overflow-hidden rounded-3xl p-3"
-          >
-            {/* Contribution streak */}
-            <img
-              src="https://github-readme-streak-stats.herokuapp.com/?user=aks-hit&theme=transparent&hide_border=true&background=00000000&stroke=22e4ff&ring=ff2bd6&fire=ffb547&currStreakNum=cfd6ff&sideNums=cfd6ff&currStreakLabel=22e4ff&sideLabels=9d4edd&dates=cfd6ff"
-              alt="GitHub streak"
-              loading="lazy"
-              className="w-full"
-              data-testid="github-streak-card"
-            />
-          </motion.div>
-        </div>
       </section>
 
       {/* ══════════════════════════════════════════════════════════════

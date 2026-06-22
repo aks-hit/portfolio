@@ -5,7 +5,7 @@ export const profile = {
   "title": "AI Engineer | Agentic AI · RAG · LLMOps · Multi-Agent Pipelines · Voice AI",
   "badge": "GATE 2025 · Top 9% · Oracle Data Science & GenAI Certified",
   "summary": "AI Engineer who takes ambiguous problems from 0→1 and ships production systems fast — delivered a lease abstraction pipeline in 5 weeks that cut processing time 70x at under $1/month, because cost and scale are design constraints, not afterthoughts. Drawn to building things that solve real problems: autonomous outreach agents, real-time voice systems, multi-agent document pipelines that run on autopilot. Fluent across the full stack — cloud infrastructure, LLM evaluation, real-time communication, and enterprise workflow automation.",
-  "email": "akshitsinghak@yahoo.com",
+  "email": "akshit.singh.tech@gmail.com",
   "phone": "+91-8787232180",
   "location": "India",
   "links": {
@@ -89,6 +89,7 @@ export const profile = {
         "Developed an agentic RAG chatbot for lease intelligence (Gemini function-calling, hybrid BM25 + vector retrieval, cross-encoder rerank, RRF fusion) with dynamic outputs (text, Excel/CSV, dashboards); improved RAGAS 0.47 → 0.76 (+62%), faithfulness 0.40 → 0.94 (+135%), cut query latency 191x via caching.",
         "Defined cost architecture end-to-end: pdfplumber-first cascade to eliminate Gemini Vision costs on clean PDFs, token budgets per phase, and linear cost scaling validated at 10x lease volume."
       ],
+      "shortSummary": "Built a multi-agent lease abstraction pipeline from 0→1 in 5 weeks — 70x faster review, <$1/month.",
       "color": "cyan"
     },
     {
@@ -101,6 +102,7 @@ export const profile = {
         "Introduced deterministic LLM pipelines with schema-constrained parsing and LLM-as-a-Judge validation, cutting hallucination rate by ~40%; integrated a speech-to-evaluation system fusing ASR with rubric-based scoring that reduced evaluation time by ~65%.",
         "Decoupled generation, evaluation, and validation into independent modular APIs — zero-downtime deployments and independent service scaling."
       ],
+      "shortSummary": "Designed an AI interview orchestration platform — eliminated 90% manual setup and cut LLM latency by 70-80%.",
       "color": "violet"
     },
     {
@@ -113,33 +115,43 @@ export const profile = {
         "Implemented residual convolutional blocks and temporal convolutional networks, improving predictive accuracy by 10–15% over traditional methods.",
         "Orchestrated data cleaning and preprocessing with Pandas and Scikit-learn, reducing model error by 15%."
       ],
+      "shortSummary": "Researched ML/DL-based sleep stage classification using non-invasive PPG signals, achieving up to 86% accuracy.",
       "color": "amber"
     }
   ],
   "projects": [
     {
       "id": "lease-abstraction-pipeline",
-      "title": "Multi-Agent Lease Abstraction Pipeline",
-      "description": "End-to-end production system that abstracts 54 structured fields from 200+ commercial leases per month at under $1/month total Gemini cost. Multi-agent conflict resolution with source-quote grounding eliminates hallucination; fault-tolerant job queue with per-chunk checkpointing survives crashes across 9 pipeline phases.",
-      "highlights": "Cut per-lease review from 4–8 hours to <5 minutes (~70x). 3-tier OCR cascade (pdfplumber → EasyOCR → Gemini Vision) delivers 3.9x throughput across 882 pages. Linear cost scaling validated at 10x volume.",
-      "tech": ["Python", "Gemini 2.5 Flash-Lite", "pdfplumber", "EasyOCR", "Multi-Agent", "Job Queues", "Cost Architecture"],
+      "title": "Multi-Agent Lease Abstraction & RAG Chatbot",
+      "description": "End-to-end production system that abstracts 54 structured fields from 200+ commercial leases per month at under $1/month total Gemini cost, paired with conversational lease intelligence for natural-language queries. Features multi-agent conflict resolution, fault-tolerant job queues, and hybrid BM25 + vector retrieval with cross-encoder reranking.",
+      "highlights": "3-tier OCR cascade delivers 3.9x throughput across 882 pages. Agentic RAG chatbot increases RAGAS score by +62%.",
+      "metrics": [
+        { "label": "Review Speedup", "value": "70x" },
+        { "label": "Pipeline Cost", "value": "<$1/mo" },
+        { "label": "RAGAS Score", "value": "+62%" }
+      ],
+      "tech": ["Python", "Gemini 2.5", "Multi-Agent", "Job Queues", "RAG", "BM25", "Vector Retrieval"],
       "link": "#",
       "gradient": "from-cyan-500 to-violet-600"
     },
     {
-      "id": "agentic-rag-lease-chatbot",
-      "title": "Agentic RAG Lease Intelligence Chatbot",
-      "description": "Conversational lease intelligence — natural-language queries with dynamic outputs (text, Excel/CSV, dashboards). Gemini function-calling, hybrid BM25 + vector retrieval, cross-encoder reranking, and RRF fusion.",
-      "highlights": "RAGAS 0.47 → 0.76 (+62%), faithfulness 0.40 → 0.94 (+135%), query latency cut 191x via tiered caching.",
-      "tech": ["Gemini Function Calling", "BM25", "Vector Retrieval", "Cross-Encoder Rerank", "RRF Fusion", "RAGAS"],
-      "link": "#",
-      "gradient": "from-violet-500 to-fuchsia-600"
+      "id": "nextflow-builder",
+      "title": "NextFlow Visual LLM Builder",
+      "description": "An n8n-style visual workflow builder to construct, execute, and monitor complex Directed Acyclic Graph (DAG) workflows powered by generative AI.",
+      "highlights": "Real-time pulsating UI, parallel execution via Trigger.dev, type-safe connections, and PostgreSQL persistence.",
+      "tech": ["Next.js", "React Flow", "Trigger.dev", "Google Gemini", "Clerk", "Neon"],
+      "link": "https://nextflow-akshit.vercel.app",
+      "gradient": "from-purple-500 to-indigo-600"
     },
     {
       "id": "customer-support-voice-agent",
       "title": "AI Customer Support Voice Agent",
       "description": "Production telephony system handling real customer-support workload — bilingual (EN + HI), sub-2s latency, 5+ concurrent calls via Twilio, Deepgram, OpenAI, and SQLite. Session-aware call handling with persistent storage for complaint booking, escalation routing, and sentiment-aware responses.",
-      "highlights": "Cut manual workload by 70%. Concurrent session handling with persistent context across complaint booking and escalation flows.",
+      "highlights": "Concurrent session handling with persistent context across complaint booking and escalation flows.",
+      "metrics": [
+        { "label": "Workload Cut", "value": "70%" },
+        { "label": "Latency", "value": "<2s" }
+      ],
       "tech": ["Twilio", "Deepgram", "OpenAI", "SQLite", "FastAPI", "Voice AI", "Bilingual"],
       "link": "https://github.com/aks-hit/Customer_Support_Voice_agent",
       "gradient": "from-fuchsia-500 to-rose-600"
@@ -170,6 +182,42 @@ export const profile = {
       "tech": ["Google Gemini", "Playwright", "Gmail API", "Google Sheets API", "Python", "Agentic AI"],
       "link": "https://github.com/aks-hit/outreach_agent",
       "gradient": "from-indigo-500 to-sky-600"
+    },
+    {
+      "id": "cicd-for-ml",
+      "title": "CI/CD for Machine Learning",
+      "description": "Automated training, evaluation, versioning, and deployment of Drug Classification models using GitHub Actions.",
+      "highlights": "Automated MLOps workflow deployed directly to Hugging Face Spaces.",
+      "tech": ["Python", "GitHub Actions", "Hugging Face", "MLOps"],
+      "link": "https://huggingface.co/spaces/AkshitSingh/Drug_Classification",
+      "gradient": "from-teal-500 to-emerald-600"
+    },
+    {
+      "id": "mba-application-tracker",
+      "title": "MBA Application Tracker",
+      "description": "Track all your MBA applications easily at one place.",
+      "highlights": "Custom dashboard with streamlined application monitoring.",
+      "tech": ["JavaScript", "React", "Next.js"],
+      "link": "https://mbapplication-tracker.vercel.app",
+      "gradient": "from-blue-500 to-indigo-600"
+    },
+    {
+      "id": "diabetes-prediction",
+      "title": "Diabetes Prediction Web App",
+      "description": "A trained Support Vector Machine (SVM) model to detect whether a patient has diabetes based on medical parameters.",
+      "highlights": "Interactive Streamlit web app with real-time inference.",
+      "tech": ["Python", "SVM", "Machine Learning", "Streamlit"],
+      "link": "https://diabetespredicting.streamlit.app/",
+      "gradient": "from-rose-500 to-pink-600"
+    },
+    {
+      "id": "birthday-wish",
+      "title": "Interactive Birthday Wish",
+      "description": "A fun, interactive web application to send birthday wishes.",
+      "highlights": "Deployed on Vercel with responsive design.",
+      "tech": ["HTML", "CSS", "JavaScript"],
+      "link": "https://birthday-wish-sde.vercel.app/",
+      "gradient": "from-yellow-400 to-orange-500"
     }
   ],
   /* ── Anatomical brain regions: positions reflect actual human brain anatomy.
