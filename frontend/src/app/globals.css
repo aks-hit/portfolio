@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   DEEP-COSMOS · NEURAL · AI ENGINEER AESTHETIC
+   ============================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; overflow-x: hidden; }
+
+:root {
+  --cosmos-bg: #03020a;
+  --cosmos-bg-2: #070414;
+  --neon-cyan: #22e4ff;
+  --neon-violet: #9d4edd;
+  --neon-magenta: #ff2bd6;
+  --neon-amber: #ffb547;
+  --neon-lime: #b6ff3c;
+  --grain-opacity: 0.04;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(157, 78, 221, 0.18), transparent 60%),
+    radial-gradient(900px 500px at 5% 5%, rgba(34, 228, 255, 0.12), transparent 60%),
+    radial-gradient(800px 600px at 50% 110%, rgba(255, 43, 214, 0.10), transparent 60%),
+    linear-gradient(180deg, #03020a 0%, #070414 100%);
+  background-attachment: fixed;
+  color: #e5e7ff;
+  letter-spacing: -0.005em;
+}
+
+/* Grain overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  mix-blend-mode: overlay;
+}
+
+/* Subtle scan lines */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0,
+    transparent 3px,
+    rgba(255, 255, 255, 0.012) 3px,
+    rgba(255, 255, 255, 0.012) 4px
+  );
+}
+
+/* Light theme — soft neuromorphic cream with neural pastels */
+body.light {
+  background:
+    radial-gradient(1000px 500px at 80% -10%, rgba(157, 78, 221, 0.10), transparent 60%),
+    radial-gradient(800px 400px at 5% 5%, rgba(34, 200, 255, 0.10), transparent 60%),
+    linear-gradient(180deg, #f7f4ff 0%, #eef0ff 100%);
+  background-attachment: fixed;
+  color: #14122b;
+}
+body.light::before { opacity: 0.03; }
+
+/* ── Display gradient text ── */
+.gradient-text {
+  background: linear-gradient(120deg, #22e4ff 0%, #9d4edd 45%, #ff2bd6 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  overflow: visible;
+  line-height: 1.05;
+}
+
+.gradient-amber {
+  background: linear-gradient(120deg, #ffb547 0%, #ff2bd6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ── Glass card ── */
+.glass {
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.06), rgba(34, 228, 255, 0.04));
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid rgba(157, 78, 221, 0.18);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 20px 50px -20px rgba(0, 0, 0, 0.6);
+}
+
+.glass-strong {
+  background: rgba(7, 4, 20, 0.65);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(157, 78, 221, 0.25);
+}
+
+body.light .glass {
+  background: linear-gradient(135deg, rgba(157, 78, 221, 0.08), rgba(34, 200, 255, 0.06));
+  border-color: rgba(20, 18, 43, 0.10);
+}
+
+body.light .glass-strong {
+  background: rgba(255, 255, 255, 0.75);
+  border-color: rgba(20, 18, 43, 0.10);
+}
+
+/* ── Neon edge glow on hover ── */
+.neon-card {
+  position: relative;
+  border-radius: 20px;
+  transition: transform 0.4s cubic-bezier(.2,.7,.2,1), box-shadow 0.4s ease;
+}
+.neon-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(34,228,255,0.5), rgba(157,78,221,0.5), rgba(255,43,214,0.5));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+.neon-card:hover::before { opacity: 1; }
+.neon-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -25px rgba(157, 78, 221, 0.45);
+}
+
+/* ── Marker prefix ── */
+.terminal-prefix::before {
+  content: '◢';
+  margin-right: 0.75rem;
+  color: var(--neon-cyan);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+/* ── Mesh grid background utility ── */
+.mesh-grid {
+  background-image:
+    linear-gradient(rgba(157,78,221,0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,228,255,0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 50%, transparent 100%);
+}
+
+/* ── Animated underline ── */
+.link-underline {
+  background-image: linear-gradient(90deg, var(--neon-cyan), var(--neon-magenta));
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 0.3s ease;
+}
+.link-underline:hover { background-size: 100% 1px; }
+
+/* ── Marquee / orbit utility ── */
+.glow-dot {
+  width: 8px; height: 8px;
+  border-radius: 9999px;
+  background: var(--neon-cyan);
+  box-shadow: 0 0 12px var(--neon-cyan), 0 0 32px rgba(34,228,255,0.4);
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #050315; }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #9d4edd 0%, #22e4ff 100%);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover { background: #ff2bd6; }
+
+body.light ::-webkit-scrollbar-track { background: #eef0ff; }
+body.light ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #9d4edd, #22e4ff); }
+
+/* ── Selection ── */
+::selection {
+  background: rgba(34, 228, 255, 0.35);
+  color: #ffffff;
+}
+body.light ::selection {
+  background: rgba(157, 78, 221, 0.25);
+  color: #14122b;
+}
+
+/* ── Light theme overrides for neon-aware components ── */
+body.light .text-zinc-100 { color: #14122b; }
+body.light .text-zinc-200 { color: #1f1d3e; }
+body.light .text-zinc-300 { color: #2d2b54; }
+body.light .text-zinc-400 { color: #4b4972; }
+body.light .text-zinc-500 { color: #6b6a8c; }
+body.light .text-white { color: #14122b; }
+
+body.light .border-white\/10 { border-color: rgba(20, 18, 43, 0.10); }
+body.light .border-white\/5 { border-color: rgba(20, 18, 43, 0.06); }
+body.light .bg-white\/5 { background-color: rgba(20, 18, 43, 0.04); }
+body.light .bg-white\/10 { background-color: rgba(20, 18, 43, 0.06); }
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--neon-cyan);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Smooth fonts */
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Subtle blink */
+.cursor-blink::after {
+  content: '_';
+  margin-left: 2px;
+  animation: blink 1.1s steps(2, start) infinite;
+  color: var(--neon-cyan);
+}
+@keyframes blink { to { visibility: hidden; } }
+
+/* Hide cursor on no-pointer devices safely */
+@media (pointer: coarse) {
+  .cursor-follower-hide { display: none !important; }
+}

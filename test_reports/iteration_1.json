@@ -1,0 +1,43 @@
+{
+  "summary": "Frontend-only Playwright E2E testing of Next.js 14 portfolio (Akshit Singh AI Engineer). Tested all 5 pages (Home, About, Experience, Projects, Contact), 3D AI brain canvas, neural background, hero/stats/featured projects, navbar navigation, chat widget (with /api/chat fallback knowledge base), theme toggle, and project overlay. 31/32 data-testid checks PASS. One UX bug in project overlay close behavior. /api/chat (Next.js route) responds 200 with local fallback as expected.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "ProjectsPage / ProjectCard / ProjectOverlay",
+        "issue": "Project overlay opens on card hover (onMouseEnter) but never reliably closes via the X button (data-testid='overlay-close-btn') or backdrop click. Root cause: clicking the close button leaves the mouse pointer over an underlying project card, so the moment the overlay unmounts, the card's onMouseEnter fires again and re-opens the overlay (often with a different project). Verified: a JS-dispatched click (no mouse move) closes correctly, confirming onClose works; the conflict is purely between hover-to-open and any pointer near a card. Also, the page subtitle reads 'Click any card to view problem, stack, and outcome.' which contradicts the hover-based open behavior.",
+        "selector": "[data-testid='project-card-*'] (onMouseEnter) + [data-testid='overlay-close-btn']",
+        "priority": "HIGH"
+      }
+    ],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Change ProjectCard from hover-to-open (onMouseEnter) to click-to-open (onClick) — matches the subtitle 'Click any card to view...' and fixes the re-open-on-close bug.",
+    "Optionally add Escape-key handler in ProjectOverlay (keydown listener calling onClose) for accessibility.",
+    "Optionally set pointer-events: none on project cards while overlay is open as a defensive fix."
+  ],
+  "critical_code_review_comments": [
+    "ProjectCard uses onMouseEnter to open the overlay while the section copy promises click-based interaction — UX inconsistency and source of the close bug.",
+    "ProjectOverlay has no Escape-key handler and no body-scroll lock; consider adding both.",
+    "/api/chat route correctly returns 400 when 'question' field is missing and falls back to the local knowledge base when GEMINI_API_KEY is unset — behavior matches spec.",
+    "AIBrain WebGL canvas logs benign GPU performance warnings ('GL_CLOSE_PATH_NV, GPU stall due to ReadPixels') in headless Chromium — driver-level, not app code; safe to ignore.",
+    "Theme toggle correctly adds/removes the 'light' class on body. No contrast regressions observed in either theme on the home hero."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "not tested (per request)",
+    "frontend": "~97% (31/32 testid/flow checks PASS; project overlay close flow fails due to hover-open conflict)"
+  },
+  "test_credentials": "none required",
+  "seed_data_creation": "none",
+  "retest_needed": true,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "All data-testid selectors specified in the review request are present and resolve correctly. Chat fallback works (POST /api/chat with {question: '...'} returns {answer, source: 'local'}). Theme toggle, all nav links, featured projects, experience cards, skills section, contact methods, hero CTAs all confirmed. The ONLY failing flow is project overlay close — see RCA below. After main agent flips ProjectCard from onMouseEnter to onClick, re-test by: hover a card (should NOT open), click a card (should open), click X or backdrop (should close and stay closed).",
+  "rca_of_the_issue": "Bug: Project overlay re-opens immediately after closing via X / backdrop. Repro: Navigate to /projects → hover any card → overlay opens → click overlay-close-btn → overlay flashes closed then re-opens (sometimes with a different project). Root cause: ProjectCard binds onMouseEnter={onHover} which calls setActiveProject(index). The X button and backdrop button correctly call onClose → setActiveProject(null), but Playwright/real users naturally leave the cursor inside the modal area after clicking. When AnimatePresence unmounts the overlay, the cursor is now over an underlying ProjectCard, triggering onMouseEnter and re-opening. Confirmed by dispatching button.click() via page.evaluate (which does NOT move the mouse) — overlay closes cleanly in that case. Mitigation: switch ProjectCard to onClick={onHover} (rename prop to onOpen for clarity), and/or apply pointer-events-none to the project grid while an overlay is active."
+}

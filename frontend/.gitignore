@@ -1,0 +1,55 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+/eval
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# lock files
+package-lock.json
+
+# personal content & scripts
+/content/
+/scripts/
+
+# agent context
+agent.md
+generate_agent_md.py
+*.zip
+.vercel
+.env*
+
+# source images
+WhatsApp*
+public/images/original.*

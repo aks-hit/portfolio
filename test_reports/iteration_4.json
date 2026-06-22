@@ -1,0 +1,36 @@
+{
+  "summary": "Frontend-only Playwright E2E for iteration 4 (skull/face outline + voice toggle + Cal.com Book CTAs + free github-readme-stats widget). Verified all 8 review-request items against the public preview URL. Result: 8/8 functional checks PASS, 0 functional FAILS.",
+  "backend_issues": { "critical": [], "minor": [] },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Home brain canvas (LIGHT theme default)", "issues": ["The procedural cerebrum mesh renders almost pure white in the light theme, which significantly overpowers the faint cyan SkullOutline (opacity 0.05-0.55). Skull features (FRONT/BACK/L/R labels, eye sockets, mouth arc, ear loops, nose triangle) ARE visible — verified in screenshot — but they read as very low contrast vs. the bright cerebrum. Dark theme makes them pop. Consider defaulting to dark (was also flagged in iter-3). Not a functional bug."]},
+      {"screen": "Home brain — 'scan my mind' hint", "issues": ["AIBrain.tsx declares `const [showHint, setShowHint] = useState(true)` at line 510 and dismisses it on first interaction (line 537-539), but the hint is never actually rendered in the JSX — `showHint` is read by the dismissal effect only. So the user-facing 'scan my mind' CTA promised in the problem statement is missing from the DOM (verified: 0 nodes contain the substring 'scan my mind'). Note: this hint was NOT in the explicit test_list, so all 8 listed items still PASS — flagging as a minor miss for the main agent to address."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "[Minor] Render the 'scan my mind' hint CTA in AIBrain.tsx when `showHint && !activeId && !hoveredId` — currently the state exists but no JSX consumes it.",
+    "[Optional / design] Default the app to dark theme (or use prefers-color-scheme) so the skull outline + brain glow read as designed."
+  ],
+  "critical_code_review_comments": [
+    "SkullOutline.tsx (156 lines) — clean, well-commented, anatomically thoughtful: dome wireframe + edge-segments + equator/coronal rings + eye sockets with glowing cyan pupils + nose triangle + mouth arc + ear loops + half-torus jaw + 4 direction labels (FRONT/BACK/L/R) via drei <Html>. Uses useFrame for a subtle 'breathing' scale. Pure presentational, no props needed beyond optional `visible`. Good separation from AIBrain.tsx.",
+    "AgentMissionHub.tsx — voice toggle pattern is correct: cancels in-flight speech on toggle-off (`window.speechSynthesis?.cancel()`), gates with `voiceEnabled` prop down to InteractiveBrain. Both Book CTAs use `target=_blank` + `rel=noopener noreferrer` (good security hygiene). Cal.com URL `https://cal.com/akshit-singh` is hardcoded in two places — consider extracting to `profile.links.cal` for single-source-of-truth.",
+    "GitHub stats section uses three free public services (github-readme-stats.vercel.app x2 + github-readme-streak-stats.herokuapp.com). No auth, no API key, free tier — good choice. `loading=\"lazy\"` is set. In headless Chromium these external images render to broken-image placeholders (expected per agent note); SRC attributes verified to contain `aks-hit` + the correct service hostnames.",
+    "AIBrain.tsx (694 lines) — past the 500-line threshold and now at 694 with SkullOutline + voice. Still cohesive but consider splitting `BrainScene` and `RegionMarker` into their own files in a future pass. `showHint` state is declared but never rendered as JSX — dead-code / forgotten render (see frontend_issues).",
+    "Voice narration effect uses `getVoices()` synchronously without waiting for the `voiceschanged` event — on some browsers first invocation returns []. Not blocking, but on cold-start the first lobe hover may use the default voice instead of the explicit pick. Optional polish: subscribe to `speechSynthesis.onvoiceschanged` once.",
+    "Theme toggle confirmed working — toggling adds `light` class to `<body>` (verified in iter-4 via DOM diff). Iter-3 said it toggles 'light → dark cosmos' but the actual class management is on body and the default state seems to be 'no class = dark-ish neutral'. Test verified the class diff explicitly this iteration so future agents needn't be confused."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "not tested (per request)",
+    "frontend": "100% on the 8 explicit review items (skull-outline + direction labels visible, voice-toggle-btn state changes voice→voice on + zinc→cyan, hero-cta-book + cta-strip-book both target cal.com/akshit-singh in new tab, github-stats-section sits between basketball-strip and cta-strip with 3 imgs whose SRCs contain github-readme-stats/streak + aks-hit, all 6 brain region tabs + brain-info-{id} cards + brain-info-close work, basketball-strip still present, theme-toggle-btn + chat-toggle-btn + nav routes all working). One enhancement from the original problem statement (the 'scan my mind' hint) is not rendered."
+  },
+  "test_credentials": "none required",
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "ITER-4 SPECIFICS: (1) Voice toggle data-testid='voice-toggle-btn' sits absolute top-16 right-5 INSIDE the hero-brain-wrapper, NOT inside the canvas — pointer events work. Toggling flips label 'voice' ↔ 'voice on' and switches between text-zinc-400 and text-neon-cyan classes. Web Speech audio not testable in headless Chromium — just verify state. (2) Cal.com URL is `https://cal.com/akshit-singh` (hardcoded in two places: hero-cta-book line 237 + cta-strip-book line 632 of AgentMissionHub.tsx). (3) Github stats section testid='github-stats-section'; children imgs use testids github-stats-card, github-langs-card, github-streak-card; SRCs reference github-readme-stats.vercel.app and github-readme-streak-stats.herokuapp.com with username `aks-hit`. Verify the SRC attribute, NOT the rendered image (external image services often fail in headless). (4) Page ordering on home: hero → 6-region-grid → spotlight-experience → featured-projects → basketball-strip → github-stats-section → cta-strip → footer. (5) The 'scan my mind' hint is declared in AIBrain.tsx state but not rendered — main agent needs to add the JSX. (6) SkullOutline component renders inside the Canvas via Suspense; <Html distanceFactor=8> labels FRONT/BACK/L/R may overlap the chat-toggle pip if chat is open in viewport corner — minor cosmetic. (7) Theme toggle adds `light` class to <body>, not <html> — older docs in iter-3 didn't specify; use body.classList for diffing.",
+  "rca_of_the_issue": "No bugs blocking the 8 explicit test items. The single notable miss: AIBrain.tsx line 510 declares `const [showHint, setShowHint] = useState(true)` and the useEffect at line 537-539 dismisses it on first interaction (activeId || hoveredId), but no JSX element in the component consumes `showHint` to render a 'scan my mind' CTA pill. RCA: the dev added the state + dismissal logic but forgot to wire the actual render block. Fix: in AIBrain.tsx after the HUD overlays (~line 605), conditionally render `{showHint && !activeId && !hoveredId && <div className='absolute left-5 top-1/2 -translate-y-1/2 pointer-events-none …'>◢ scan my mind</div>}`."
+}

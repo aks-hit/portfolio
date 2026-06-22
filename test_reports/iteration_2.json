@@ -1,0 +1,34 @@
+{
+  "summary": "Frontend-only Playwright E2E for iteration 2 (interactive brain + resume sync). Verified all 14 review-request items: home/brain canvas, hero name+summary+stats, brain auto-cycle (~3.5s -> Vision), all 6 region tabs (vision/frontal/temporal/parietal/occipital/cerebellum) update subtitle+>=3 bullets, region-specific content (temporal->bilingual voice, occipital->lease pipeline), close button, stats values (70x/<$1/191x/Top 9%), experience page (3 cards: Relay Human Cloud / Your Ally Stack / IITRAM with all dates and metrics), projects page (6 cards, click-to-open + Esc + close-btn closes), about page (new summary, primary+secondary education, 7 skill categories), contact email yahoo update + phone, chat send/reply via /api/chat local fallback (http://localhost:3000), suggested-chip data-testids exist (render only initially, by design), navbar to all 5 routes, theme toggle. Total: 63 checks PASS, 0 functional FAILS. Iter-1 bug (project overlay close) is fully fixed.",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "InteractiveBrain canvas renders correctly with shader-displaced organic mesh + 6 RegionMarker nodes. Benign WebGL 'GL_CLOSE_PATH_NV / GPU stall due to ReadPixels' warnings appear in headless Chromium — driver-level, not app code; safe to ignore.",
+    "AgentMissionHub uses AnimatePresence with key={activeRegion.id} for the region panel; rapid testid-based queries can race the exit animation — wait_for_selector for the new panel testid is required (handled in tests). Consider mode='wait' on AnimatePresence to make tab switches feel cleaner.",
+    "Suggested chat chips (Lease pipeline?, RAG metrics?, Voice agent?, Why hire?) are conditionally rendered only when messages.length <= 1. This is the intended UX (chips disappear after first interaction). Worth documenting in a comment so the next testing agent doesn't flag it.",
+    "ProjectCard now uses onClick + Enter/Space keydown (good a11y) and ProjectOverlay supports Esc-to-close + click-outside-to-close + body-scroll lock — iteration 1 bug fully resolved.",
+    "profile.ts is fully synced from resume.pdf: new email (akshitsinghak@yahoo.com), new summary (lease pipeline 70x / <$1/month), new stats (70x, <$1, 191x, Top 9%), 3 experiences with correct dates + metrics (RAGAS 0.47→0.76, faithfulness 0.40→0.94, 191x latency, 3-tier OCR cascade), 6 projects with new IDs, primary (B.Tech HIT Kolkata 8.68 CGPA) + secondary (Higher Secondary CBSE Green Valley Varanasi 94.8%) education, 7 skill categories, 6 brainRegions with bullets.",
+    "Per the iteration-2 instructions, brain region TABS (not 3D markers) drive the panel — this is the right testing strategy for headless Chromium.",
+    "Minor design note: chat panel position can cause the floating chat-toggle button to be reported 'outside viewport' on some re-renders (first paint of brain shifts layout). Not a real bug — button is position:fixed and visually present in screenshots."
+  ],
+  "updated_files": [],
+  "success_rate": {
+    "backend": "not tested (per request)",
+    "frontend": "100% (63/63 functional checks PASS across home/brain/experience/projects/about/contact/chat/nav/theme)"
+  },
+  "test_credentials": "none required",
+  "seed_data_creation": "none",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Use http://localhost:3000 (Next.js dev) per main agent's note — /api/chat is a Next.js route, not FastAPI, so the public REACT_APP_BACKEND_URL ingress routes /api/* to FastAPI which has no /api/chat (returns 404). Brain region testing: click data-testid='brain-region-tab-{id}' tabs, NOT the 3D markers (headless WebGL is unreliable). After a tab click, use wait_for_selector('[data-testid=brain-region-panel-{id}]') instead of immediate query_selector — AnimatePresence with key={activeRegion.id} can race fast queries during the exit transition. Hero auto-selects Vision Cortex ~3.5s after mount — wait for that before testing initial-closed state. Suggested chat chips render only when messages.length <= 1, so query them BEFORE sending the first message. Project overlay close (iter-1 bug) is confirmed fixed: click-to-open + Esc + close-btn + backdrop-click all work, body-scroll is locked.",
+  "rca_of_the_issue": "No new functional issues found in iteration 2. The iteration-1 project-overlay close bug is fully fixed (ProjectCard moved from onMouseEnter to onClick; ProjectOverlay added Esc handler + click-outside + body-scroll lock). All interactive-brain functionality (auto-cycle, tab switching, region-specific bullets, close button) works as specified."
+}
