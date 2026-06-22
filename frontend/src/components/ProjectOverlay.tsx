@@ -45,7 +45,7 @@ export default function ProjectOverlay({ project, onClose }: Props) {
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.96, y: 20 }}
         transition={{ type: 'spring', stiffness: 260, damping: 24 }}
-        className="relative z-10 max-h-[86vh] w-full max-w-3xl overflow-auto rounded-3xl border border-white/10 bg-cosmos-900/90 p-7 shadow-2xl backdrop-blur-xl sm:p-9"
+        className="relative z-10 w-full max-w-3xl rounded-3xl border border-white/10 bg-cosmos-900/90 p-7 shadow-2xl backdrop-blur-xl sm:p-9"
       >
         <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-neon-violet/30 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-10 -left-10 h-40 w-40 rounded-full bg-neon-cyan/20 blur-3xl" />

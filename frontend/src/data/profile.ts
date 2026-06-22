@@ -81,7 +81,7 @@ export const profile = {
       "id": "relay-human-cloud-ai-engineer",
       "role": "AI Engineer",
       "company": "Relay Human Cloud",
-      "period": "January 2026 — Present",
+      "period": "January 2026 — June 2026",
       "points": [
         "Delivered an end-to-end multi-agent lease abstraction pipeline (Python, Gemini 2.5-flash-lite) from 0 to production in 5 weeks — reduced per-lease review from 4–8 hours to under 5 minutes (~70x) across a 200+ lease portfolio, extracting 54 structured fields across multiple lease formats at under $1/month; runs monthly without manual intervention.",
         "Architected a 3-tier OCR cascade (pdfplumber → EasyOCR → Gemini Vision): pdfplumber handles clean PDFs at zero API cost, EasyOCR processes degraded scans, Gemini Vision resolves ambiguous pages — 3.9x throughput improvement (204 → 52 min) across 882 pages via parallel execution.",
@@ -209,15 +209,6 @@ export const profile = {
       "tech": ["Python", "SVM", "Machine Learning", "Streamlit"],
       "link": "https://diabetespredicting.streamlit.app/",
       "gradient": "from-rose-500 to-pink-600"
-    },
-    {
-      "id": "birthday-wish",
-      "title": "Interactive Birthday Wish",
-      "description": "A fun, interactive web application to send birthday wishes.",
-      "highlights": "Deployed on Vercel with responsive design.",
-      "tech": ["HTML", "CSS", "JavaScript"],
-      "link": "https://birthday-wish-sde.vercel.app/",
-      "gradient": "from-yellow-400 to-orange-500"
     }
   ],
   /* ── Anatomical brain regions: positions reflect actual human brain anatomy.
