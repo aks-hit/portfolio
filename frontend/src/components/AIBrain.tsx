@@ -223,7 +223,6 @@ function Cerebrum({
       }}
     >
       <icosahedronGeometry args={[1.15, 96]} />
-      {/* @ts-expect-error custom shader */}
       <brainMaterial ref={matRef} attach="material" />
     </mesh>
   );
@@ -268,7 +267,6 @@ function Cerebellum({
     <group position={[0, -0.75, -0.85]} scale={[0.55, 0.42, 0.55]}>
       <mesh onPointerMove={onPointerMove} onClick={onClick}>
         <sphereGeometry args={[1, 48, 48]} />
-        {/* @ts-expect-error custom shader */}
         <brainMaterial ref={matRef} attach="material" />
       </mesh>
     </group>
